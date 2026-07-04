@@ -1,6 +1,6 @@
-# Astro Agency Starter
+# Website Maker with Astro
 
-A production-grade Astro 5 + TinaCMS starter for agency, consultant, and personal sites. This is not a toy template: it was extracted from a real, revenue-generating agency website ([theremarkableagency.com](https://theremarkableagency.com)) by stripping the brand out and keeping everything that took months to get right.
+Make a full website fast. This is a ready-to-use Astro 5 + TinaCMS starter with a blog, CMS, and SEO built in. It is not a toy template: it comes from a real, revenue-generating agency website ([theremarkableagency.com](https://theremarkableagency.com)), with the brand stripped out and everything that took months to get right kept in.
 
 **The approach:** build a real production site first, then run a strip script that removes every brand-specific string, image, and page while preserving the architecture, design system, SEO plumbing, and content pipeline. What's left is a starter that has already survived contact with production. This repo is the output of that process, and the script itself ([strip-to-starter.sh](strip-to-starter.sh)) is included so you can do the same with your own site.
 
@@ -19,7 +19,7 @@ A production-grade Astro 5 + TinaCMS starter for agency, consultant, and persona
 ## Quickstart
 
 ```sh
-git clone https://github.com/Almontas/astro-agency-starter my-site
+git clone https://github.com/Almontas/website-maker-with-astro my-site
 cd my-site
 npm install
 cp .env.local.example .env.local   # fill in only what you need
