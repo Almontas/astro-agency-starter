@@ -1,0 +1,252 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import { getCollection } from 'astro:content';
+
+const caseStudyOrder = [
+  'zencastr',
+  'tubebuddy',
+  'bloomberg',
+  'hedgefundalpha',
+  'myrecipes',
+  'option-trade-king',
+  'elitetradeclub',
+  'benlabs',
+  'virtual-santa',
+];
+
+const listingCopy: Record<string, { resultSummary: string; challenge: string }> = {
+  zencastr: {
+    resultSummary: '$34 to $2.59 CAC, plus a 25% lift in subscriptions',
+    challenge: 'Zencastr needed to scale acquisition in new markets without wasting spend. We rebuilt the growth approach across paid media, creative, SEO, and conversion.',
+  },
+  tubebuddy: {
+    resultSummary: '50%+ revenue growth, with stronger YouTube and SEO performance',
+    challenge: 'TubeBuddy had a strong product and a large creator base. The opportunity was to improve acquisition, activation, and monetization across the full funnel.',
+  },
+  bloomberg: {
+    resultSummary: '$1M to $100M in subscription revenue',
+    challenge: 'Bloomberg had millions of readers, but the subscription business needed a scalable growth engine. The work focused on paid acquisition, conversion, lifecycle, and revenue accountability.',
+  },
+  hedgefundalpha: {
+    resultSummary: '30% YoY revenue growth and 40% of new subscriptions from AI content channels',
+    challenge: 'Hedge Fund Alpha needed a clearer path to subscription growth. We improved the content, acquisition, and marketing operations needed to drive more qualified customers.',
+  },
+  myrecipes: {
+    resultSummary: '100K to 2M users with zero paid spend',
+    challenge: 'MyRecipes needed to grow without a paid marketing budget. We used owned channels, lifecycle, retention, and growth systems to drive adoption at scale.',
+  },
+};
+
+const caseStudiesById = new Map((await getCollection('case-studies')).map((study) => [study.id, study]));
+const caseStudies = caseStudyOrder
+  .map((id) => caseStudiesById.get(id))
+  .filter((study): study is NonNullable<typeof study> => Boolean(study));
+
+const categories = [...new Set(caseStudies.map(s => s.data.service))];
+---
+
+<BaseLayout title="Case Studies — My Site" description="Real results from My Site's growth marketing engagements. See how we've driven measurable outcomes across paid media, AI creative, CRO, and lifecycle strategy.">
+  <section class="py-16 md:py-20 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <!-- Hero -->
+      <div class="mb-12 md:mb-16">
+        <span class="section-number font-mono text-xs text-gold tracking-wider uppercase">Case Studies</span>
+        <h1 class="font-headline text-3xl md:text-4xl text-cream mt-4">Results, Not Promises</h1>
+        <p class="font-body text-muted-stone mt-4 max-w-2xl leading-relaxed">
+          See how we've helped SaaS, subscription, media, and AI-adjacent companies lower acquisition costs, improve conversion, and build growth systems that scale.
+        </p>
+        <div class="mt-8 flex items-baseline gap-3">
+          <span class="font-mono font-semibold text-gold text-3xl md:text-4xl tracking-tighter" data-count-to="200" data-prefix="$" data-suffix="M+">$200M+</span>
+          <span class="font-body text-sm text-muted-stone uppercase tracking-wider">in attributable revenue generated for clients</span>
+        </div>
+      </div>
+
+      <!-- Logo Bar -->
+      <div class="mb-12">
+      </div>
+
+      <!-- Bridge -->
+      <div class="mb-12 md:mb-14 py-10 md:py-12 border-y border-dark-umber/40">
+        <div class="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-8 md:gap-12">
+          <div>
+            <span class="section-number font-mono text-xs text-gold tracking-wider uppercase">Common Thread</span>
+            <h2 class="font-headline text-2xl md:text-3xl text-cream mt-4">What These Case Studies Have in Common</h2>
+          </div>
+          <div class="space-y-4 font-body text-muted-stone leading-relaxed">
+            <p>Growth rarely breaks in one place.</p>
+            <p>Sometimes paid media stops scaling. Sometimes conversion is too low. Sometimes lifecycle is underbuilt. Sometimes the team is doing a lot, but no one can clearly see what is driving revenue.</p>
+            <p>Our job is to find what is holding growth back, fix the highest-impact constraint, and scale what works.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap gap-3 mb-8" id="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        {categories.map((cat) => (
+          <button class="filter-tab" data-filter={cat.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')}>
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- All Case Studies -->
+      <ScrollReveal stagger={150}>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="case-study-grid">
+        {caseStudies.map((study) => (
+          <CaseStudyCard
+            title={study.data.title}
+            client={study.data.client}
+            challenge={listingCopy[study.id]?.challenge || study.data.challenge}
+            heroMetric={study.data.heroMetric}
+            heroMetricLabel={study.data.heroMetricLabel}
+            service={study.data.service}
+            slug={study.id}
+            featuredImage={study.data.featuredImage}
+            secondaryMetric={study.data.secondaryMetric}
+            secondaryMetricLabel={study.data.secondaryMetricLabel}
+            resultSummary={listingCopy[study.id]?.resultSummary}
+          />
+        ))}
+      </div>
+      </ScrollReveal>
+
+      <!-- Mid-page CTA -->
+      <div class="text-center my-12 md:my-16 py-10 border-y border-dark-umber/40">
+        <p class="font-headline text-xl md:text-2xl text-cream tracking-tight" style="letter-spacing: -0.02em;">
+          Want to see what we'd do for your growth?
+        </p>
+        <a href="/contact" class="btn-cta mt-6 inline-block">Book a Free Strategy Call</a>
+      </div>
+
+      <!-- Testimonials -->
+      <ScrollReveal stagger={150}>
+      <div class="mt-16 md:mt-24">
+        <p class="text-center text-cream/40 text-xs uppercase tracking-[3px] mb-10">Don't take our word for it</p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          <!-- Testimonial 1 — Mike Fard -->
+          <div class="bg-warm-slate border border-dark-umber border-t-2 border-t-gold/20 rounded-brand-md p-7 shadow-card-rest">
+            <span class="font-headline text-4xl text-gold/40 leading-none mb-2 block">&ldquo;</span>
+            <p class="font-body text-[15px] text-cream leading-snug italic">
+              My Site is a growth and advertising powerhouse that helped us with our implementation of Facebook ads for a national mall account, achieving a 2X return on ad expense and teaching our staff how to do it on their own after.
+            </p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="/images/headshots/headshot-mike-fard.jpeg" alt="Mike Fard" class="w-10 h-10 rounded-full object-cover border-2 border-gold/30 shadow-md" />
+              <div>
+                <p class="font-body text-[15px] text-cream font-medium">Mike Fard</p>
+                <p class="font-body text-[13px] text-muted-stone">AI Marketing, Intel</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 — Matt Plotnik -->
+          <div class="bg-warm-slate border border-dark-umber border-t-2 border-t-gold/20 rounded-brand-md p-7 shadow-card-rest">
+            <span class="font-headline text-4xl text-gold/40 leading-none mb-2 block">&ldquo;</span>
+            <p class="font-body text-[15px] text-cream leading-snug italic">
+              Run, don't walk, towards the opportunity of working with My Site.
+            </p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="/images/headshots/headshot-matt-plotnik.jpeg" alt="Matt Plotnik" class="w-10 h-10 rounded-full object-cover border-2 border-gold/30 shadow-md" />
+              <div>
+                <p class="font-body text-[15px] text-cream font-medium">Matt Plotnik</p>
+                <p class="font-body text-[13px] text-muted-stone">Head of Marketing, Apple Music</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 — Collier Hamm -->
+          <div class="bg-warm-slate border border-dark-umber border-t-2 border-t-gold/20 rounded-brand-md p-7 shadow-card-rest">
+            <span class="font-headline text-4xl text-gold/40 leading-none mb-2 block">&ldquo;</span>
+            <p class="font-body text-[15px] text-cream leading-snug italic">
+              My Site team are some of the best marketers I have ever worked with. They balance strategy with compassion, business results with creativity, and lead with future-forward thinking all at the same time.
+            </p>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="/images/headshots/headshot-collier.jpeg" alt="Collier Hamm" class="w-10 h-10 rounded-full object-cover border-2 border-gold/30 shadow-md" />
+              <div>
+                <p class="font-body text-[15px] text-cream font-medium">Collier Hamm</p>
+                <p class="font-body text-[13px] text-muted-stone">Director of Growth, Removery</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </ScrollReveal>
+
+      <!-- Bottom CTA -->
+      <div class="text-center mt-16 md:mt-24 mb-8">
+        <h2 class="font-headline text-3xl md:text-4xl tracking-tightest text-cream headline-glow">
+          Want a Clearer Read on What Is Holding Growth Back?
+        </h2>
+        <p class="text-muted-stone text-md mt-4 max-w-xl mx-auto">
+          One conversation. No pitch deck. Just a practical look at what is working, what is not, and where your biggest growth opportunities may be.
+        </p>
+        <a href="/contact" class="btn-cta mt-10 inline-block">Book a Free Strategy Call</a>
+        <p class="text-cream/30 text-[13px] mt-4 text-center">Typically responds within 24 hours</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-tab {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid var(--color-border-subtle);
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition-property: transform, border-color, color;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .filter-tab:hover {
+    border-color: rgba(201, 169, 110, 0.4);
+    color: var(--color-text-primary);
+  }
+
+  .filter-tab:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+  }
+
+  .filter-tab:active {
+    transform: scale(0.97);
+  }
+
+  .filter-tab.active {
+    border-color: var(--color-accent-gold);
+    color: var(--color-accent-gold);
+    background: rgba(201, 169, 110, 0.08);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+    const cards = document.querySelectorAll<HTMLElement>('.case-study-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

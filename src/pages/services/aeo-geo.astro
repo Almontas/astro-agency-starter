@@ -1,0 +1,379 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+import { gitLastModified } from '../../lib/gitLastModified.js';
+
+const caseStudies = await getCollection('case-studies');
+const hedgefundalpha = caseStudies.find(s => s.id === 'hedgefundalpha');
+
+const testimonials = await getCollection('testimonials');
+const collierTestimonial = testimonials.find(t => t.id === 'collier-hamm');
+
+const faqs = [
+  {
+    question: "What is AEO (Answer Engine Optimization)?",
+    answer: "AEO is the practice of optimizing your brand's content, structured data, and authority signals so that AI-powered answer engines — like ChatGPT, Perplexity, Google AI Overviews, and Claude — surface your brand as the answer when users ask questions relevant to your category. Unlike traditional SEO which focuses on ranking in link-based results, AEO focuses on being cited and recommended in AI-generated responses."
+  },
+  {
+    question: "What is the difference between SEO and AEO?",
+    answer: "SEO optimizes for traditional search engine rankings — earning higher positions in a list of blue links. AEO optimizes for AI-generated answers — ensuring your brand is cited, recommended, or referenced when an AI system synthesizes a response. SEO is about ranking; AEO is about being the answer. Both matter, but AEO is increasingly where high-intent discovery happens."
+  },
+  {
+    question: "How do I optimize for ChatGPT, Perplexity, and AI Overviews?",
+    answer: "Optimization for AI answer engines requires a multi-layer approach: structured data (JSON-LD schema) so machines can parse your content, machine-readable site summaries (like llms.txt), FAQ-rich content that directly answers buyer questions, named frameworks and precise definitions that invite citation, and authority signals from third-party sources. We call this the Citation Stack, and we implement all five layers."
+  },
+  {
+    question: "What is Generative Engine Optimization (GEO)?",
+    answer: "GEO is the broader discipline of optimizing for generative AI systems — any platform that uses large language models to generate responses. This includes ChatGPT, Perplexity, Google's AI Overviews, Claude, and emerging AI search products. AEO and GEO are closely related; AEO focuses specifically on answer engines, while GEO covers the full spectrum of generative AI discovery surfaces."
+  },
+  {
+    question: "How do you measure AEO results?",
+    answer: "We track several metrics: brand mention frequency in AI-generated responses (using systematic prompt testing across ChatGPT, Perplexity, and Claude), citation rates when AI systems recommend solutions in your category, structured data validation scores, and directional traffic from AI referral sources. We establish a baseline before optimization and measure improvement over 30/60/90-day cycles."
+  },
+  {
+    question: "How does AEO work for SaaS companies specifically?",
+    answer: "AEO for SaaS companies focuses on ensuring your product is cited when buyers ask AI assistants questions like 'what's the best tool for [your category].' This involves structuring your product pages, documentation, and case studies with schema markup, creating answer-first content that addresses specific SaaS buyer queries, and building entity authority through third-party mentions on review sites, directories, and industry publications that AI models use as training and retrieval sources."
+  },
+  {
+    question: "How do I get my SaaS product cited by ChatGPT and Perplexity?",
+    answer: "Getting cited by ChatGPT and Perplexity requires a multi-layer approach: implement structured data (JSON-LD) so AI systems can parse your product information, create machine-readable site summaries (llms.txt), publish answer-first content that directly addresses buyer questions, build third-party authority signals through reviews and mentions, and continuously test your citation rates across AI platforms. Our Citation Stack™ methodology covers all five layers systematically."
+  },
+  {
+    question: "What is AI search optimization for B2B?",
+    answer: "AI search optimization for B2B is the practice of ensuring your company appears in AI-generated responses when business buyers research solutions. Unlike consumer search, B2B AI queries tend to be specific and high-intent — 'best enterprise data platform for healthcare' or 'top marketing automation for mid-market SaaS.' Optimizing for these queries requires structured data, clear product positioning, authoritative third-party mentions, and content formatted for AI extraction rather than traditional keyword ranking."
+  }
+];
+---
+
+<BaseLayout title="AEO / GEO Optimization for SaaS — My Site" description="Answer Engine Optimization and Generative Engine Optimization for SaaS, PLG, and AI companies. Get your B2B brand cited by ChatGPT, Perplexity, and Google AI Overviews.">
+
+  <!-- Service JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "AEO / GEO Optimization for SaaS",
+    "serviceType": "Answer Engine Optimization",
+    "provider": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Answer Engine Optimization and Generative Engine Optimization — ensuring your SaaS brand is cited and recommended by AI-powered search engines like ChatGPT, Perplexity, and Google AI Overviews.",
+    "url": "https://example.com/services/aeo-geo",
+    "dateModified": gitLastModified('src/pages/services/aeo-geo.astro', "2026-04-12"),
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "SaaS, PLG, and AI companies"
+    },
+    "areaServed": {
+      "@type": "Place",
+      "name": "Worldwide"
+    }
+  })} />
+
+  <!-- HowTo JSON-LD — Citation Stack methodology -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "The Citation Stack™: How to Optimize for AI Answer Engines",
+    "description": "A five-layer methodology for getting your SaaS brand cited by ChatGPT, Perplexity, Google AI Overviews, and other AI answer engines.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Onsite Encoding",
+        "text": "Implement structured data (JSON-LD schema), machine-readable site summaries (llms.txt), FAQ markup, and breadcrumb hierarchies that make your site parseable by AI systems."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Question Ownership",
+        "text": "Create dedicated pages that directly answer the questions your buyers are asking AI assistants with clear, authoritative, structured answers that AI systems prefer to cite."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Citation Engineering",
+        "text": "Develop named frameworks, precise definitions, comparison matrices, and decision trees that invite citation by giving AI systems something concrete to reference and attribute."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 4,
+        "name": "Authority Signals",
+        "text": "Build third-party mentions, case study citations, industry directory presence, and earned media that corroborate your expertise across multiple authoritative sources."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 5,
+        "name": "Continuous Measurement",
+        "text": "Run systematic prompt testing across ChatGPT, Perplexity, Claude, and Google AI Overviews to track brand inclusion rate, citation accuracy, and competitive positioning."
+      }
+    ]
+  })} />
+
+  <!-- FAQ JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  })} />
+
+  <!-- Back nav -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-8 flex items-center justify-between">
+    <a href="/services" class="inline-flex items-center text-sm text-muted-stone hover:text-gold transition-colors duration-150">
+      <span class="mr-1">←</span> All Services
+    </a>
+    <span class="font-mono text-xs text-muted-stone/60">Last updated: April 2026</span>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-20 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">AEO / GEO for SaaS & AI Companies</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        Be the Answer, Not Just a Search Result.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        AI-powered search engines are replacing link-based discovery. When a SaaS buyer asks ChatGPT, Perplexity, or Google AI Overviews for "the best growth marketing agency for B2B SaaS" — your brand needs to be in the answer, not buried in page two of results that nobody scrolls.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <div class="border-y border-dark-umber py-8">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 md:gap-4 text-center md:text-left">
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="5">5</p>
+          <p class="metric-label mt-1">Citation Stack™ layers</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="6">6</p>
+          <p class="metric-label mt-1">AI engines optimized for</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="90" data-suffix="-day">90-day</p>
+          <p class="metric-label mt-1">measurement cycles</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Who This Is For -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">Who This Is For</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">SaaS, PLG, and AI companies whose prospects are increasingly using AI assistants to research, compare, and shortlist solutions. If your buyers ask ChatGPT "what's the best [your category]?" and you're not in the answer — you're invisible to a growing share of high-intent discovery.</p>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- SEO vs AEO Comparison Table -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">SEO vs. AEO: What's Different?</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-dark-umber">
+              <th class="py-3 pr-4 font-mono text-sm text-gold tracking-wider">Dimension</th>
+              <th class="py-3 px-4 font-mono text-sm text-muted-stone tracking-wider">Traditional SEO</th>
+              <th class="py-3 pl-4 font-mono text-sm text-gold tracking-wider">AEO / GEO</th>
+            </tr>
+          </thead>
+          <tbody class="text-base">
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Optimizes for</td>
+              <td class="py-4 px-4 text-muted-stone">Ranking in a list of links</td>
+              <td class="py-4 pl-4 text-cream">Being cited in AI-generated answers</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">How sources are selected</td>
+              <td class="py-4 px-4 text-muted-stone">PageRank, backlinks, domain authority</td>
+              <td class="py-4 pl-4 text-cream">Entity authority, structured data, passage clarity</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Key metrics</td>
+              <td class="py-4 px-4 text-muted-stone">Rankings, click-through rate, organic traffic</td>
+              <td class="py-4 pl-4 text-cream">Citation rate, mention frequency, answer inclusion</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Content format</td>
+              <td class="py-4 px-4 text-muted-stone">Long-form pages optimized for keywords</td>
+              <td class="py-4 pl-4 text-cream">Structured passages, tables, named frameworks</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Who wins</td>
+              <td class="py-4 px-4 text-muted-stone">Domains with the most backlinks</td>
+              <td class="py-4 pl-4 text-cream">Brands with the clearest, most citable answers</td>
+            </tr>
+            <tr>
+              <td class="py-4 pr-4 text-cream font-medium">Competitive landscape</td>
+              <td class="py-4 px-4 text-muted-stone">Saturated — decades of optimization</td>
+              <td class="py-4 pl-4 text-cream">Emerging — low difficulty, high opportunity</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- How We Approach — The Citation Stack -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">The Citation Stack™: How We Approach AEO</h2>
+      <p class="text-muted-stone mt-4 text-base leading-relaxed">Our AEO methodology follows a five-layer Citation Stack™ — each layer builds on the last. Most agencies stop at content. We go all the way through authority engineering.</p>
+      <div class="mt-10 space-y-10">
+        <!-- Layer 1 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Layer 1</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Onsite Encoding</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Structured data (JSON-LD schema), machine-readable site summaries (llms.txt), FAQ markup, and breadcrumb hierarchies that make your site parseable by AI systems. This is the foundation — without it, AI engines can't extract accurate information about your brand.</p>
+        </div>
+        <!-- Layer 2 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Layer 2</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Question Ownership</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Dedicated pages that directly answer the questions your buyers are asking AI assistants. Not blog posts that dance around the topic — clear, authoritative, structured answers that AI systems prefer to cite.</p>
+        </div>
+        <!-- Layer 3 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Layer 3</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Citation Engineering</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Named frameworks, precise definitions, comparison matrices, and decision trees that invite citation. When you name something specific — like the Acceleration Framework™ — AI systems have something concrete to reference and attribute.</p>
+        </div>
+        <!-- Layer 4 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Layer 4</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Authority Signals</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Third-party mentions, case study citations, industry directory presence, and earned media that corroborate your expertise. AI systems weigh external validation heavily — a brand mentioned across multiple authoritative sources gets recommended more often.</p>
+        </div>
+        <!-- Layer 5 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Layer 5</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Continuous Measurement</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Systematic prompt testing across ChatGPT, Perplexity, Claude, and Google AI Overviews to track your brand's inclusion rate, citation accuracy, and competitive positioning. We measure before, during, and after — so you know what's working.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Proof Callout — HFA Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <div class="bg-warm-slate border border-dark-umber rounded-lg p-8 md:p-10">
+        <span class="font-mono text-sm text-gold tracking-wider">Proof Point — Hedge Fund Alpha</span>
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <p class="metric-value text-4xl md:text-5xl">40%</p>
+            <p class="text-muted-stone mt-2 text-base leading-relaxed">of new subscriptions attributed to AI content channels — built through structured data, answer-first content, and citation engineering.</p>
+          </div>
+          <div>
+            <p class="metric-value text-4xl md:text-5xl">+30%</p>
+            <p class="text-muted-stone mt-2 text-base leading-relaxed">year-over-year revenue growth after implementing the Citation Stack™ methodology across their content and technical infrastructure.</p>
+          </div>
+        </div>
+        <a href="/case-studies/hedgefundalpha" class="inline-flex items-center text-sm text-gold hover:text-cream transition-colors duration-150 mt-6">
+          Read the full case study <span class="ml-1">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Acceleration Framework Connection -->
+  <section class="bg-warm-slate border-y border-dark-umber py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">How the Acceleration Framework Applies to AEO</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">AEO follows the same Acceleration Framework™ we apply to every growth discipline: <strong class="text-cream">Diagnose</strong> to find what is holding growth back, <strong class="text-cream">Spark</strong> to launch focused tests across the highest-impact growth levers, and <strong class="text-cream">Amplify</strong> to scale what works and turn it into a repeatable system.</p>
+        <p class="text-muted-stone text-base leading-relaxed">The compounding effect is especially strong in AEO — every improvement to your structured data, content clarity, and authority signals reinforces the others. AI systems that cite you once are more likely to cite you again as the evidence accumulates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {hedgefundalpha && (
+          <CaseStudyCard
+            title={hedgefundalpha.data.title}
+            client={hedgefundalpha.data.client}
+            challenge={hedgefundalpha.data.challenge}
+            heroMetric={hedgefundalpha.data.heroMetric}
+            heroMetricLabel={hedgefundalpha.data.heroMetricLabel}
+            service={hedgefundalpha.data.service}
+            slug={hedgefundalpha.id}
+            featuredImage={hedgefundalpha.data.featuredImage}
+            secondaryMetric={hedgefundalpha.data.secondaryMetric}
+            secondaryMetricLabel={hedgefundalpha.data.secondaryMetricLabel}
+          />
+        )}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- FAQ Section -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Frequently Asked Questions</h2>
+      <div class="space-y-8">
+        {faqs.map((faq) => (
+          <div class="border-l-2 border-dark-umber pl-6">
+            <h3 class="text-cream font-medium text-base mb-2">{faq.question}</h3>
+            <p class="text-muted-stone text-base leading-relaxed">{faq.answer}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {collierTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{collierTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{collierTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{collierTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Ready to be the answer?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's assess your AI visibility and build a plan to get your brand cited.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call →</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+</BaseLayout>

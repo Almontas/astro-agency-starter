@@ -1,0 +1,544 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   BRAND DESIGN TOKENS
+   ============================================================ */
+
+:root {
+  --color-bg-primary:        #1E1B18;
+  --color-bg-secondary:      #2A2725;
+  --color-bg-tertiary:       #353230;
+  --color-text-primary:      #F2E8DC;
+  --color-text-secondary:    #9B918A;
+  --color-accent-gold:       #C9A96E;
+  --color-accent-amber:      #D4A44A;
+  --color-accent-teal:       #5B9E8F;
+  --color-accent-red:        #B86B4A;
+  --color-border-subtle:     #353230;
+  --color-border-gold:       #C9A96E;
+  --color-surface-elevated:  #2A2725;
+  --color-surface-floating:  #353230;
+
+  --font-headline: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body:     'Inter', Calibri, -apple-system, sans-serif;
+  --font-mono:     'JetBrains Mono', Consolas, 'Courier New', monospace;
+
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-med:  300ms;
+  --duration-slow: 500ms;
+
+  --glow-cover: radial-gradient(
+    ellipse 60% 50% at 85% 10%,
+    rgba(201, 169, 110, 0.15) 0%,
+    rgba(201, 169, 110, 0.06) 40%,
+    transparent 70%
+  );
+}
+
+[data-theme="light"] {
+  --color-bg-primary:        #F5F0E8;
+  --color-bg-secondary:      #FFFFFF;
+  --color-bg-tertiary:       #F5F0E8;
+  --color-text-primary:      #1E1B18;
+  --color-text-secondary:    #7A7570;
+  --color-accent-gold:       #A8884E;
+  --color-accent-amber:      #A8884E;
+  --color-accent-teal:       #4A8577;
+  --color-border-subtle:     #DDD6CC;
+  --color-border-gold:       #A8884E;
+  --color-surface-elevated:  #FFFFFF;
+  --color-surface-floating:  #FFFFFF;
+  --glow-cover: none;
+}
+
+/* ============================================================
+   BODY — Subtle vertical gradient + SVG noise grain overlay
+   ============================================================ */
+
+body {
+  background: linear-gradient(180deg, #1E1B18 0%, #1a1715 50%, #1E1B18 100%);
+  background-attachment: fixed;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* --- Ambient drifting glow orbs --- */
+
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.ambient-glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  will-change: transform;
+}
+
+.ambient-glow-orb-1 {
+  width: 60vw; height: 60vh;
+  top: -15vh; right: -10vw;
+  background: radial-gradient(ellipse at center, rgba(201,169,110,0.05) 0%, rgba(201,169,110,0.02) 40%, transparent 70%);
+}
+
+.ambient-glow-orb-2 {
+  width: 50vw; height: 50vh;
+  bottom: -10vh; left: -15vw;
+  background: radial-gradient(ellipse at center, rgba(201,169,110,0.035) 0%, rgba(201,169,110,0.015) 40%, transparent 70%);
+}
+
+[data-theme="light"] .ambient-glow {
+  display: none;
+}
+
+[data-theme="light"] body,
+body[data-theme="light"] {
+  background: linear-gradient(180deg, #F5F0E8 0%, #F0EBE2 50%, #F5F0E8 100%);
+}
+
+/* ============================================================
+   UTILITY CLASSES
+   ============================================================ */
+
+@layer components {
+  .gold-rule {
+    border: none;
+    height: 1px;
+    background: var(--color-accent-gold);
+    opacity: 0.6;
+  }
+
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-accent-gold);
+    letter-spacing: 0.1em;
+    position: relative;
+    display: inline-block;
+  }
+  .section-number::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(201,169,110,0.3), transparent);
+    opacity: 0.3;
+  }
+
+  .metric-value {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--color-accent-gold);
+    letter-spacing: -0.03em;
+  }
+
+  .metric-value--teal {
+    color: var(--color-accent-teal);
+  }
+
+  .metric-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* --- Standard warm glow --- */
+
+  .warm-glow {
+    position: relative;
+  }
+
+  .warm-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--glow-cover);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* --- Strong warm glow (hero-level impact) --- */
+
+  .warm-glow-strong {
+    position: relative;
+  }
+
+  .warm-glow-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse 70% 60% at 80% 15%,
+      rgba(201, 169, 110, 0.18) 0%,
+      rgba(201, 169, 110, 0.08) 35%,
+      rgba(201, 169, 110, 0.02) 60%,
+      transparent 80%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* --- Typography utilities --- */
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #F2E8DC 0%, #C9A96E 40%, #D4A44A 70%, #C9A96E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .headline-glow {
+    text-shadow: 0 0 60px rgba(201,169,110,0.08), 0 0 120px rgba(201,169,110,0.04);
+  }
+
+  /* --- Section divider --- */
+
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(201,169,110,0.10) 10%, rgba(201,169,110,0.30) 30%, rgba(201,169,110,0.50) 50%, rgba(201,169,110,0.30) 70%, rgba(201,169,110,0.10) 90%, transparent 100%);
+    position: relative;
+  }
+  .section-divider::after {
+    content: '';
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: -4px;
+    bottom: -4px;
+    background: radial-gradient(ellipse at center, rgba(201,169,110,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* --- Typography --- */
+
+  .headline {
+    font-family: var(--font-headline);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--color-text-primary);
+  }
+
+  .body-text {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  /* --- Card depth system --- */
+
+  .card-elevated {
+    box-shadow: 0 1px 2px rgba(30,27,24,0.4), 0 4px 8px rgba(30,27,24,0.2);
+    transition-property: transform, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-elevated:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(30,27,24,0.3), 0 16px 32px rgba(30,27,24,0.25), 0 0 24px rgba(201,169,110,0.07);
+  }
+  .card-elevated:active {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 3px rgba(30,27,24,0.5), 0 2px 6px rgba(30,27,24,0.2);
+  }
+
+  .card-glow-hover { position: relative; overflow: hidden; }
+  .card-glow-hover::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,169,110,0.4), transparent);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .card-glow-hover:hover::after { opacity: 1; }
+
+  /* --- CTA Button — bigger, bolder --- */
+
+  .btn-cta {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9375rem;
+    letter-spacing: 0.05em;
+    color: var(--color-bg-primary);
+    background: linear-gradient(135deg, #D4A44A 0%, #C9A96E 50%, #D4A44A 100%);
+    border: none;
+    padding: 0.9375rem 2.25rem;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(30,27,24,0.3), 0 1px 2px rgba(201,169,110,0.15);
+    transition: transform 300ms var(--ease-spring),
+                box-shadow 300ms var(--ease-spring);
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(30,27,24,0.3), 0 2px 8px rgba(201,169,110,0.2), 0 0 20px rgba(212,164,74,0.15);
+  }
+
+  .btn-cta:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 1px 2px rgba(30,27,24,0.4), 0 1px 3px rgba(201,169,110,0.1);
+  }
+
+  .btn-cta:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+  }
+
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+  .btn-ghost {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.9375rem;
+    letter-spacing: 0.05em;
+    color: var(--color-accent-gold);
+    background: transparent;
+    border: 1px solid rgba(201,169,110,0.3);
+    padding: 0.9375rem 2.25rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 300ms var(--ease-spring),
+                border-color 300ms var(--ease-out-expo);
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .btn-ghost:hover {
+    transform: translateY(-1px);
+    border-color: rgba(201,169,110,0.6);
+  }
+
+  .btn-ghost:active {
+    transform: translateY(0);
+    border-color: rgba(201,169,110,0.4);
+  }
+
+  .btn-ghost:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+  }
+}
+
+/* ============================================================
+   ANIMATION KEYFRAMES & UTILITIES
+   ============================================================ */
+
+@keyframes ambientDrift1 {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(5vw, 3vh); }
+  50%  { transform: translate(-3vw, -5vh); }
+  75%  { transform: translate(8vw, -2vh); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes ambientDrift2 {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-4vw, -6vh); }
+  50%  { transform: translate(6vw, 2vh); }
+  75%  { transform: translate(-2vw, 5vh); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes grainDrift {
+  0%, 100% { transform: translate(0, 0); }
+  25%  { transform: translate(-64px, 32px); }
+  50%  { transform: translate(128px, -64px); }
+  75%  { transform: translate(-32px, 128px); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes shimmer {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 700ms var(--ease-out-expo) both;
+}
+
+.animate-fade-in-left {
+  animation: fadeInLeft 700ms var(--ease-out-expo) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 700ms var(--ease-out-expo) both;
+}
+
+.delay-80 { animation-delay: 80ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-180 { animation-delay: 180ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-440 { animation-delay: 440ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-780 { animation-delay: 780ms; }
+
+/* --- Image zoom on hover --- */
+
+.img-zoom-container { overflow: hidden; }
+.img-zoom-container img {
+  transition-property: transform;
+  transition-duration: 500ms;
+  transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+}
+.img-zoom-container:hover img { transform: scale(1.04); }
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Selection color */
+::selection {
+  background: rgba(201, 169, 110, 0.3);
+  color: #F2E8DC;
+}
+
+/* ============================================================
+   STAGGERED SCROLL-REVEAL CHILDREN
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .stagger-children > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--ease-out-expo), transform 0.6s var(--ease-out-expo);
+  }
+  /* Trigger when .stagger-children itself or a parent has .is-visible */
+  .stagger-children.is-visible > *,
+  .is-visible .stagger-children > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .stagger-children.is-visible > .section-number,
+  .is-visible .stagger-children > .section-number { transition-delay: 0s; }
+  .stagger-children.is-visible > h2,
+  .stagger-children.is-visible > .stagger-heading,
+  .is-visible .stagger-children > h2,
+  .is-visible .stagger-children > .stagger-heading { transition-delay: 0.1s; }
+  .stagger-children.is-visible > p,
+  .stagger-children.is-visible > .stagger-body,
+  .is-visible .stagger-children > p,
+  .is-visible .stagger-children > .stagger-body { transition-delay: 0.2s; }
+  .stagger-children.is-visible > a,
+  .stagger-children.is-visible > .stagger-cta,
+  .is-visible .stagger-children > a,
+  .is-visible .stagger-children > .stagger-cta { transition-delay: 0.3s; }
+  .stagger-children.is-visible > div,
+  .is-visible .stagger-children > div { transition-delay: 0.2s; }
+}
+
+/* ============================================================
+   CTA BUTTON SHIMMER
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn-cta {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+    animation: btn-shimmer 3s var(--ease-out-expo) infinite;
+  }
+  @keyframes btn-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+}
+
+/* ============================================================
+   GOLD GLOW PULSE — Bridge Text
+   ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .transition-cta-glow {
+    animation: text-glow 4s ease-in-out infinite;
+  }
+  @keyframes text-glow {
+    0%, 100% { text-shadow: 0 0 0px transparent; }
+    50% { text-shadow: 0 0 20px rgba(201,169,110,0.3), 0 0 40px rgba(201,169,110,0.1); }
+  }
+}

@@ -1,0 +1,596 @@
+---
+const services = [
+  { label: 'Paid Media', href: '/services/paid-media' },
+  { label: 'AI Performance Creative', href: '/services/ai-performance-creative' },
+  { label: 'Conversion Optimization', href: '/services/conversion-optimization' },
+  { label: 'Lifecycle & Retention', href: '/services/lifecycle-retention' },
+];
+
+const growthStrategy = {
+  label: 'Growth Strategy & Leadership',
+  href: '/services/growth-strategy',
+};
+
+const icps = [
+  { label: 'PLG SaaS', href: '/for/plg-saas' },
+  { label: 'AI Companies', href: '/for/ai-companies' },
+  { label: 'Subscription', href: '/for/subscription' },
+  { label: 'Consumer', href: '/for/consumer' },
+];
+
+const freeTools = [
+  { label: 'AI Discovery Audit', href: '/audit' },
+  { label: 'Growth Diagnostic', href: '/diagnostic' },
+];
+
+const navLinks = [
+  { label: 'Case Studies', href: '/case-studies' },
+  { label: 'Blog', href: '/blog' },
+];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-espresso/95 backdrop-blur-sm border-b border-dark-umber shadow-brand-sm"
+>
+  <nav class="mx-auto max-w-7xl px-6 lg:px-8" aria-label="Primary navigation">
+    <div class="flex h-18 items-center justify-between">
+      <!-- Logo -->
+      <a
+        href="/"
+        class="flex-shrink-0 transition-opacity duration-150 ease-out-expo hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+        aria-label="My Site — Home"
+      >
+        <img
+          src="/logos/logo-dark.svg"
+          alt="My Site"
+          class="h-9 w-auto"
+        />
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:gap-10">
+        <!-- Services Dropdown -->
+        <div class="relative" id="services-dropdown">
+          <button
+            type="button"
+            class="flex items-center gap-1 text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+            aria-expanded="false"
+            aria-haspopup="true"
+            id="services-trigger"
+          >
+            Services
+            <svg
+              class="h-4 w-4 transition-transform duration-150 ease-out-expo"
+              id="services-chevron"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+
+          <!-- Dropdown Panel -->
+          <div
+            class="absolute left-1/2 top-full mt-3 w-64 -translate-x-1/2 rounded-brand-lg bg-warm-slate border border-dark-umber shadow-brand-lg p-1 opacity-0 -translate-y-2 pointer-events-none transition-opacity duration-300 ease-out-expo"
+            style="transition-property: opacity, transform;"
+            id="services-panel"
+            role="menu"
+          >
+            <div class="py-2">
+              {services.map((item) => (
+                <a
+                  href={item.href}
+                  role="menuitem"
+                  class="block px-4 py-2.5 text-sm text-cream rounded-brand-sm transition-opacity duration-150 ease-out-expo hover:text-gold hover:bg-dark-umber/50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold active:opacity-70"
+                >
+                  {item.label}
+                </a>
+              ))}
+
+              <!-- Gold divider -->
+              <hr class="mx-4 my-2 border-0 h-px bg-gold/60" />
+
+              <a
+                href={growthStrategy.href}
+                role="menuitem"
+                class="block px-4 py-2.5 text-sm font-medium text-gold rounded-brand-sm transition-opacity duration-150 ease-out-expo hover:text-amber hover:bg-dark-umber/50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold active:opacity-70"
+              >
+                {growthStrategy.label}
+              </a>
+
+              <hr class="mx-4 my-2 border-0 h-px bg-dark-umber" />
+
+              <a
+                href="/services"
+                role="menuitem"
+                class="block px-4 py-2.5 text-xs font-mono tracking-wider uppercase text-muted-stone rounded-brand-sm transition-opacity duration-150 ease-out-expo hover:text-cream hover:bg-dark-umber/50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold active:opacity-70"
+              >
+                View All Services &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Who It's For Dropdown -->
+        <div class="relative" id="icps-dropdown">
+          <button
+            type="button"
+            class="flex items-center gap-1 text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+            aria-expanded="false"
+            aria-haspopup="true"
+            id="icps-trigger"
+          >
+            Who It's For
+            <svg
+              class="h-4 w-4 transition-transform duration-150 ease-out-expo"
+              id="icps-chevron"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+
+          <div
+            class="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-brand-lg bg-warm-slate border border-dark-umber shadow-brand-lg p-1 opacity-0 -translate-y-2 pointer-events-none transition-opacity duration-300 ease-out-expo"
+            style="transition-property: opacity, transform;"
+            id="icps-panel"
+            role="menu"
+          >
+            <div class="py-2">
+              {icps.map((item) => (
+                <a
+                  href={item.href}
+                  role="menuitem"
+                  class="block px-4 py-2.5 text-sm text-cream rounded-brand-sm transition-opacity duration-150 ease-out-expo hover:text-gold hover:bg-dark-umber/50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold active:opacity-70"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- About Link -->
+        <a
+          href="/about"
+          class="text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+        >
+          About
+        </a>
+
+        <!-- Free Resources Dropdown -->
+        <div class="relative" id="tools-dropdown">
+          <button
+            type="button"
+            class="flex items-center gap-1 text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+            aria-expanded="false"
+            aria-haspopup="true"
+            id="tools-trigger"
+          >
+            Free Resources
+            <svg
+              class="h-4 w-4 transition-transform duration-150 ease-out-expo"
+              id="tools-chevron"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+
+          <div
+            class="absolute left-1/2 top-full mt-3 w-56 -translate-x-1/2 rounded-brand-lg bg-warm-slate border border-dark-umber shadow-brand-lg p-1 opacity-0 -translate-y-2 pointer-events-none transition-opacity duration-300 ease-out-expo"
+            style="transition-property: opacity, transform;"
+            id="tools-panel"
+            role="menu"
+          >
+            <div class="py-2">
+              {freeTools.map((item) => (
+                <a
+                  href={item.href}
+                  role="menuitem"
+                  class="block px-4 py-2.5 text-sm text-cream rounded-brand-sm transition-opacity duration-150 ease-out-expo hover:text-gold hover:bg-dark-umber/50 focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-gold active:opacity-70"
+                >
+                  {item.label}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Other Nav Links -->
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:opacity-70"
+          >
+            {link.label}
+          </a>
+        ))}
+
+        <!-- CTA Button -->
+        <a
+          href="/contact"
+          class="btn-cta"
+        >
+          Book a Free Strategy Call
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button
+        type="button"
+        class="md:hidden flex items-center justify-center w-10 h-10 text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+        id="mobile-menu-toggle"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Toggle navigation menu"
+      >
+        <!-- Hamburger icon -->
+        <svg
+          class="h-6 w-6"
+          id="hamburger-icon"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+        </svg>
+        <!-- Close icon (hidden by default) -->
+        <svg
+          class="h-6 w-6 hidden"
+          id="close-icon"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="2"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Panel -->
+  <div
+    class="md:hidden overflow-hidden opacity-0 max-h-0 transition-opacity duration-300 ease-out-expo"
+    style="transition-property: opacity, max-height;"
+    id="mobile-menu"
+    aria-hidden="true"
+  >
+    <div class="border-t border-dark-umber bg-espresso px-6 pb-8 pt-6 space-y-1">
+      <!-- Services (inline, not dropdown) -->
+      <p class="px-3 pt-3 pb-1 text-xs font-mono font-medium text-gold tracking-wider uppercase">
+        Services
+      </p>
+      {services.map((item) => (
+        <a
+          href={item.href}
+          class="block px-3 py-2 text-sm text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <hr class="mx-3 my-2 border-0 h-px bg-gold/60" />
+
+      <a
+        href={growthStrategy.href}
+        class="block px-3 py-2 text-sm font-medium text-gold transition-opacity duration-150 ease-out-expo hover:text-amber focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+      >
+        {growthStrategy.label}
+      </a>
+
+      <hr class="mx-3 my-2 border-0 h-px bg-dark-umber" />
+
+      <a
+        href="/services"
+        class="block px-3 py-2 text-xs font-mono tracking-wider uppercase text-muted-stone transition-opacity duration-150 ease-out-expo hover:text-cream focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+      >
+        View All Services &rarr;
+      </a>
+
+      <!-- Divider -->
+      <hr class="mx-3 my-3 border-0 h-px bg-dark-umber" />
+
+      <!-- Who It's For -->
+      <p class="px-3 pt-3 pb-1 text-xs font-mono font-medium text-gold tracking-wider uppercase">
+        Who It's For
+      </p>
+      {icps.map((item) => (
+        <a
+          href={item.href}
+          class="block px-3 py-2 text-sm text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <!-- Divider -->
+      <hr class="mx-3 my-3 border-0 h-px bg-dark-umber" />
+
+      <!-- Free Resources -->
+      <p class="px-3 pt-3 pb-1 text-xs font-mono font-medium text-gold tracking-wider uppercase">
+        Free Resources
+      </p>
+      {freeTools.map((item) => (
+        <a
+          href={item.href}
+          class="block px-3 py-2 text-sm text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+        >
+          {item.label}
+        </a>
+      ))}
+
+      <!-- Divider -->
+      <hr class="mx-3 my-3 border-0 h-px bg-dark-umber" />
+
+      <!-- About + Other Links -->
+      <a
+        href="/about"
+        class="block px-3 py-2 text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+      >
+        About
+      </a>
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="block px-3 py-2 text-sm font-normal tracking-wide text-cream transition-opacity duration-150 ease-out-expo hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold active:opacity-70"
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <!-- CTA -->
+      <div class="pt-4">
+        <a href="/contact" class="btn-cta block text-center w-full">
+          Book a Free Strategy Call
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Spacer to offset fixed nav -->
+<div class="h-18" aria-hidden="true"></div>
+
+<script>
+  // Services dropdown (desktop)
+  const dropdown = document.getElementById('services-dropdown');
+  const trigger = document.getElementById('services-trigger');
+  const panel = document.getElementById('services-panel');
+  const chevron = document.getElementById('services-chevron');
+
+  let dropdownOpen = false;
+  let closeTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function openDropdown() {
+    if (closeTimeout) {
+      clearTimeout(closeTimeout);
+      closeTimeout = null;
+    }
+    dropdownOpen = true;
+    // Close other dropdowns if open
+    if (toolsOpen) closeTools();
+    if (icpsOpen) closeIcps();
+    if (trigger) trigger.setAttribute('aria-expanded', 'true');
+    if (panel) {
+      panel.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      panel.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (chevron) chevron.classList.add('rotate-180');
+  }
+
+  function closeDropdown() {
+    dropdownOpen = false;
+    if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    if (panel) {
+      panel.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+      panel.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (chevron) chevron.classList.remove('rotate-180');
+  }
+
+  // Hover behavior (desktop)
+  if (dropdown) {
+    dropdown.addEventListener('mouseenter', openDropdown);
+    dropdown.addEventListener('mouseleave', () => {
+      closeTimeout = setTimeout(closeDropdown, 150);
+    });
+  }
+
+  // Click toggle for keyboard / touch
+  if (trigger) {
+    trigger.addEventListener('click', () => {
+      if (dropdownOpen) {
+        closeDropdown();
+      } else {
+        openDropdown();
+      }
+    });
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (dropdownOpen) { closeDropdown(); trigger?.focus(); }
+      if (toolsOpen) { closeTools(); toolsTrigger?.focus(); }
+      if (icpsOpen) { closeIcps(); icpsTrigger?.focus(); }
+    }
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (dropdownOpen && dropdown && !dropdown.contains(e.target as Node)) closeDropdown();
+    if (toolsOpen && toolsDropdown && !toolsDropdown.contains(e.target as Node)) closeTools();
+    if (icpsOpen && icpsDropdown && !icpsDropdown.contains(e.target as Node)) closeIcps();
+  });
+
+  // Free Resources dropdown (desktop)
+  const toolsDropdown = document.getElementById('tools-dropdown');
+  const toolsTrigger = document.getElementById('tools-trigger');
+  const toolsPanel = document.getElementById('tools-panel');
+  const toolsChevron = document.getElementById('tools-chevron');
+
+  let toolsOpen = false;
+  let toolsCloseTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function openTools() {
+    if (toolsCloseTimeout) { clearTimeout(toolsCloseTimeout); toolsCloseTimeout = null; }
+    toolsOpen = true;
+    if (toolsTrigger) toolsTrigger.setAttribute('aria-expanded', 'true');
+    if (toolsPanel) {
+      toolsPanel.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toolsPanel.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (toolsChevron) toolsChevron.classList.add('rotate-180');
+    // Close other dropdowns if open
+    if (dropdownOpen) closeDropdown();
+    if (icpsOpen) closeIcps();
+  }
+
+  function closeTools() {
+    toolsOpen = false;
+    if (toolsTrigger) toolsTrigger.setAttribute('aria-expanded', 'false');
+    if (toolsPanel) {
+      toolsPanel.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+      toolsPanel.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (toolsChevron) toolsChevron.classList.remove('rotate-180');
+  }
+
+  if (toolsDropdown) {
+    toolsDropdown.addEventListener('mouseenter', openTools);
+    toolsDropdown.addEventListener('mouseleave', () => {
+      toolsCloseTimeout = setTimeout(closeTools, 150);
+    });
+  }
+
+  if (toolsTrigger) {
+    toolsTrigger.addEventListener('click', () => {
+      if (toolsOpen) closeTools(); else openTools();
+    });
+  }
+
+  // Who It's For (ICPs) dropdown (desktop)
+  const icpsDropdown = document.getElementById('icps-dropdown');
+  const icpsTrigger = document.getElementById('icps-trigger');
+  const icpsPanel = document.getElementById('icps-panel');
+  const icpsChevron = document.getElementById('icps-chevron');
+
+  let icpsOpen = false;
+  let icpsCloseTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  function openIcps() {
+    if (icpsCloseTimeout) { clearTimeout(icpsCloseTimeout); icpsCloseTimeout = null; }
+    icpsOpen = true;
+    if (icpsTrigger) icpsTrigger.setAttribute('aria-expanded', 'true');
+    if (icpsPanel) {
+      icpsPanel.classList.remove('opacity-0', '-translate-y-2', 'pointer-events-none');
+      icpsPanel.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (icpsChevron) icpsChevron.classList.add('rotate-180');
+    if (dropdownOpen) closeDropdown();
+    if (toolsOpen) closeTools();
+  }
+
+  function closeIcps() {
+    icpsOpen = false;
+    if (icpsTrigger) icpsTrigger.setAttribute('aria-expanded', 'false');
+    if (icpsPanel) {
+      icpsPanel.classList.add('opacity-0', '-translate-y-2', 'pointer-events-none');
+      icpsPanel.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+    }
+    if (icpsChevron) icpsChevron.classList.remove('rotate-180');
+  }
+
+  if (icpsDropdown) {
+    icpsDropdown.addEventListener('mouseenter', openIcps);
+    icpsDropdown.addEventListener('mouseleave', () => {
+      icpsCloseTimeout = setTimeout(closeIcps, 150);
+    });
+  }
+
+  if (icpsTrigger) {
+    icpsTrigger.addEventListener('click', () => {
+      if (icpsOpen) closeIcps(); else openIcps();
+    });
+  }
+
+  // Mobile menu toggle
+  const mobileToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+  const closeIcon = document.getElementById('close-icon');
+
+  let mobileOpen = false;
+
+  function toggleMobileMenu() {
+    mobileOpen = !mobileOpen;
+    if (mobileToggle) mobileToggle.setAttribute('aria-expanded', String(mobileOpen));
+    if (mobileMenu) {
+      mobileMenu.setAttribute('aria-hidden', String(!mobileOpen));
+      if (mobileOpen) {
+        mobileMenu.classList.remove('opacity-0', 'max-h-0');
+        mobileMenu.classList.add('opacity-100', 'max-h-screen');
+      } else {
+        mobileMenu.classList.add('opacity-0', 'max-h-0');
+        mobileMenu.classList.remove('opacity-100', 'max-h-screen');
+      }
+    }
+    if (hamburgerIcon) hamburgerIcon.classList.toggle('hidden', mobileOpen);
+    if (closeIcon) closeIcon.classList.toggle('hidden', !mobileOpen);
+  }
+
+  if (mobileToggle) {
+    mobileToggle.addEventListener('click', toggleMobileMenu);
+  }
+
+  // Close mobile menu on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobileOpen) {
+      toggleMobileMenu();
+      mobileToggle?.focus();
+    }
+  });
+
+  // Navbar scroll transition
+  const header = document.querySelector('header');
+  function onScroll() {
+    if (header) {
+      header.classList.toggle('nav-scrolled', window.scrollY > 50);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
+
+<style>
+  header {
+    transition: padding 0.4s var(--ease-out-expo),
+                backdrop-filter 0.4s,
+                background-color 0.4s,
+                border-color 0.4s;
+  }
+  header.nav-scrolled {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: rgba(201,169,110,0.1);
+    background-color: rgba(30,27,24,0.98);
+  }
+</style>

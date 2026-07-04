@@ -1,0 +1,259 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('case-studies');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry, allEntries: entries },
+  }));
+}
+
+const { entry, allEntries } = Astro.props;
+const { Content } = await render(entry);
+
+const relatedStudies = allEntries
+  .filter((e: typeof entry) => e.id !== entry.id)
+  .sort((a: typeof entry, b: typeof entry) => {
+    const aMatch = a.data.service === entry.data.service ? 1 : 0;
+    const bMatch = b.data.service === entry.data.service ? 1 : 0;
+    return bMatch - aMatch;
+  })
+  .slice(0, 2);
+---
+
+<BaseLayout title={entry.data.title + ' — My Site'} description={entry.data.challenge}>
+  <!-- Article JSON-LD -->
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": entry.data.title,
+      "datePublished": entry.data.publishDate ? new Date(entry.data.publishDate).toISOString() : undefined,
+      "author": {
+        "@type": "Organization",
+        "name": "My Site",
+        "url": "https://example.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "My Site",
+        "url": "https://example.com",
+        "logo": "https://example.com/logos/logo-dark.svg"
+      },
+      "description": entry.data.challenge,
+      "image": entry.data.featuredImage || undefined,
+      "about": {
+        "@type": "Organization",
+        "name": entry.data.client
+      },
+      ...(entry.data.testimonialQuote ? {
+        "review": {
+          "@type": "Review",
+          "reviewBody": entry.data.testimonialQuote,
+          "author": {
+            "@type": "Person",
+            "name": entry.data.testimonialName
+          }
+        }
+      } : {})
+    })} />
+  </Fragment>
+  <!-- Hero Section -->
+  <section class="pt-12 md:pt-16 pb-8 md:pb-10">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="font-mono text-xs text-gold tracking-wider uppercase">
+        {entry.data.service}
+      </span>
+      <p class="font-body text-sm text-muted-stone mt-2">
+        {entry.data.client}
+      </p>
+      <p class="metric-value text-4xl md:text-6xl mt-4">
+        {entry.data.heroMetric}
+      </p>
+      <p class="metric-label mt-2">
+        {entry.data.heroMetricLabel}
+      </p>
+      <h1 class="font-headline text-2xl md:text-3xl tracking-tightest text-cream mt-6" style="letter-spacing: -0.03em; line-height: 1.15;">
+        {entry.data.challenge}
+      </h1>
+    </div>
+  </section>
+
+  <!-- Results at a Glance -->
+  {entry.data.glanceStats && entry.data.glanceStats.length > 0 && (
+    <section class="border-y border-dark-umber py-6 px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto flex flex-wrap justify-center gap-8 md:gap-14">
+        {entry.data.glanceStats.map((stat: { value: string; label: string }) => (
+          <div class="text-center">
+            <p class="font-mono font-semibold text-gold text-lg md:text-xl">{stat.value}</p>
+            <p class="text-xs text-muted-stone uppercase tracking-wider mt-1">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Content Body -->
+  <ScrollReveal>
+    <section class="py-8 md:py-12">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8">
+        <div class="case-study-content">
+          <Content />
+        </div>
+      </div>
+    </section>
+  </ScrollReveal>
+
+  <!-- Testimonial Section -->
+  {entry.data.testimonialQuote && (
+    <ScrollReveal>
+      <section class="py-12 md:py-16">
+        <div class="max-w-3xl mx-auto px-6 lg:px-8">
+          <div class="border-t border-dark-umber pt-12">
+            <span class="font-headline text-5xl text-gold leading-none select-none" aria-hidden="true">&ldquo;</span>
+            <blockquote class="mt-2">
+              <p class="font-headline text-xl md:text-2xl text-cream italic leading-relaxed" style="letter-spacing: -0.01em;">
+                {entry.data.testimonialQuote}
+              </p>
+            </blockquote>
+            <div class="mt-6">
+              <p class="font-body text-sm text-cream font-medium">
+                {entry.data.testimonialName}
+              </p>
+              {entry.data.testimonialTitle && (
+                <p class="font-body text-xs text-muted-stone mt-1">
+                  {entry.data.testimonialTitle}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    </ScrollReveal>
+  )}
+
+  <!-- CTA Section -->
+  <section class="py-8 md:py-12">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <div class="border-t border-dark-umber pt-8 text-center">
+        <h2 class="font-headline text-2xl md:text-3xl tracking-tightest text-cream headline-glow" style="letter-spacing: -0.03em;">
+          Ready for Results Like These?
+        </h2>
+        <p class="text-muted-stone text-md mt-4 max-w-lg mx-auto">
+          Let's talk about what the Acceleration Framework could do for your business.
+        </p>
+        <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Case Studies -->
+  {relatedStudies.length > 0 && (
+    <ScrollReveal stagger={150}>
+      <section class="py-8 md:py-10 px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <p class="text-center text-cream/40 text-xs uppercase tracking-[3px] mb-8">More Results</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {relatedStudies.map((study: typeof entry) => (
+              <CaseStudyCard
+                title={study.data.title}
+                client={study.data.client}
+                challenge={study.data.challenge}
+                heroMetric={study.data.heroMetric}
+                heroMetricLabel={study.data.heroMetricLabel}
+                service={study.data.service}
+                slug={study.id}
+                featuredImage={study.data.featuredImage}
+                secondaryMetric={study.data.secondaryMetric}
+                secondaryMetricLabel={study.data.secondaryMetricLabel}
+              />
+            ))}
+          </div>
+          <div class="text-center mt-8">
+            <a
+              href="/case-studies"
+              class="inline-flex items-center gap-2 font-body text-sm text-teal transition-transform duration-150 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              style="transition-property: transform, opacity; transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);"
+            >
+              View All Case Studies
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="shrink-0">
+                <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+    </ScrollReveal>
+  )}
+</BaseLayout>
+
+<style>
+  .case-study-content :global(h2) {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .case-study-content :global(h3) {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .case-study-content :global(p) {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .case-study-content :global(strong) {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .case-study-content :global(ul),
+  .case-study-content :global(ol) {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .case-study-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .case-study-content :global(a) {
+    color: var(--color-accent-teal);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition-property: opacity;
+    transition-duration: 150ms;
+  }
+
+  .case-study-content :global(a:hover) {
+    opacity: 0.8;
+  }
+
+  .case-study-content :global(blockquote) {
+    border-left: 2px solid var(--color-accent-gold);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+</style>

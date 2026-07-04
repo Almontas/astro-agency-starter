@@ -1,0 +1,58 @@
+---
+interface Props {
+  title: string;
+  categories: string[];
+  excerpt: string;
+  cardHook?: string;
+  postType?: string;
+  publishDate: Date;
+  slug: string;
+  featuredImage?: string;
+  readTime?: number;
+}
+
+const { title, categories, excerpt, cardHook, postType, publishDate, slug, featuredImage, readTime } = Astro.props;
+const imageSrc = featuredImage || 'https://placehold.co/600x340/1E1B18/C9A96E?text=Blog';
+const snippet = cardHook || excerpt;
+const pillLabel = postType || categories[0];
+const isoDate = publishDate.toISOString();
+---
+
+<a
+  href={`/blog/${slug}`}
+  class="blog-post-card card-elevated card-glow-hover block bg-warm-slate border border-dark-umber rounded-brand-md overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
+>
+  <div class="relative h-[180px] img-zoom-container">
+    <img src={imageSrc} alt={title} class="w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-gradient-to-t from-espresso/30 via-transparent to-transparent"></div>
+  </div>
+  <div class="p-6 md:p-8">
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xs text-gold tracking-wider uppercase">{pillLabel}</span>
+      {readTime && (
+        <span class="font-mono text-xs text-muted-stone tracking-wide">{readTime} min read</span>
+      )}
+      <time datetime={isoDate} class="sr-only">{publishDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</time>
+    </div>
+    <h3 class="font-headline text-xl text-cream mt-3 leading-snug">{title}</h3>
+    <p class="font-body text-sm text-muted-stone mt-2 leading-relaxed line-clamp-3">{snippet}</p>
+  </div>
+</a>
+
+<style>
+  .blog-post-card {
+    transition-property: transform, opacity, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .blog-post-card:hover {
+    transform: translateY(-4px);
+    opacity: 0.92;
+  }
+
+  .blog-post-card:active {
+    transform: translateY(-1px);
+    opacity: 1;
+  }
+</style>

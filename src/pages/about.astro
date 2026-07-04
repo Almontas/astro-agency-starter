@@ -1,0 +1,248 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+---
+
+<BaseLayout title="About My Site — Growth Marketing for SaaS & AI" description="Learn about My Site — a growth marketing agency built to close the strategy gap with structured experimentation, AI-powered systems, and compounding results.">
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What kind of companies does My Site work with?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site works primarily with SaaS, PLG (product-led growth), and AI companies that need to scale acquisition and retention systematically. Our clients range from growth-stage startups to enterprise brands like Bloomberg, Samsung, and Intel."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is My Site different from other growth marketing agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most growth agencies operate like production shops — they run campaigns and report metrics. My Site was built by people who have owned growth numbers inside real companies. Our Acceleration Framework (Diagnose → Spark → Amplify) finds what is holding growth back, launches focused tests, and scales what works into a repeatable system."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the Acceleration Framework?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The Acceleration Framework is My Site's three-phase methodology: Diagnose (find what is holding growth back), Spark (launch focused tests across the highest-impact growth levers), and Amplify (scale what works and turn it into a repeatable system). Every engagement follows this framework, whether it's a 90-Day Jumpstart or an ongoing partnership."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What results has My Site achieved?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site has generated $200M+ in attributable client revenue, managed $50M+ in ad spend, tested 500+ creative variants monthly, and delivered a 32% average conversion lift across client portfolios."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Person JSON-LD — Founder -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Your Name",
+    "jobTitle": "Founder",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Founder of My Site, a growth marketing agency built to close the strategy gap with structured experimentation, AI-powered systems, and compounding results. Creator of the Acceleration Framework™.",
+    "knowsAbout": ["Growth Marketing", "Paid Media", "AI Performance Creative", "Conversion Optimization", "AEO/GEO", "Structured Experimentation", "Marketing Strategy"],
+    "image": "https://example.com/images/founder-portrait-nyc-tight-crop.jpg",
+    "url": "https://example.com/about",
+    "sameAs": [
+      "https://www.linkedin.com/in/yourhandle/"
+    ]
+  })} />
+
+  <!-- Hero Section — Text-Forward -->
+  <section class="py-16 md:py-20">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">About My Site</p>
+      <h1 class="font-headline text-3xl md:text-4xl tracking-tightest text-cream mb-6">Strategy First. Evidence Always.</h1>
+      <p class="text-muted-stone text-lg leading-relaxed max-w-2xl mx-auto">We founded My Site because growth deserves more than dashboards and deliverables. It deserves a system — one that compounds every insight into the next result.</p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <section class="border-y border-dark-umber py-6 md:py-8">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <p class="font-headline text-3xl md:text-4xl text-gold" data-count-to="200" data-prefix="$" data-suffix="M+">$200M+</p>
+          <p class="font-mono text-[0.65rem] text-muted-stone tracking-[0.15em] uppercase mt-1">Attributable Revenue</p>
+        </div>
+        <div>
+          <p class="font-headline text-3xl md:text-4xl text-gold" data-count-to="50" data-prefix="$" data-suffix="M+">$50M+</p>
+          <p class="font-mono text-[0.65rem] text-muted-stone tracking-[0.15em] uppercase mt-1">Ad Spend Managed</p>
+        </div>
+        <div>
+          <p class="font-headline text-3xl md:text-4xl text-gold" data-count-to="500" data-suffix="+">500+</p>
+          <p class="font-mono text-[0.65rem] text-muted-stone tracking-[0.15em] uppercase mt-1">Creative Variants Tested Monthly</p>
+        </div>
+        <div>
+          <p class="font-headline text-3xl md:text-4xl text-gold" data-count-to="32" data-suffix="%">32%</p>
+          <p class="font-mono text-[0.65rem] text-muted-stone tracking-[0.15em] uppercase mt-1">Avg. Conversion Lift</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo Bar -->
+
+  <!-- Operators Section -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-b border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">How We Work</p>
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-6">Built by Operators, Not Career Agency People</h2>
+      <div class="space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">My Site was built by people who have owned growth numbers inside real companies.</p>
+        <p class="text-muted-stone text-base leading-relaxed">We have scaled subscription, SaaS, media, and consumer businesses from inside the seat, not just from the outside looking in.</p>
+        <p class="text-muted-stone text-base leading-relaxed">That means we do not treat growth like a list of channels. We look at the full system: acquisition, conversion, lifecycle, creative, analytics, and the business model behind it.</p>
+        <p class="text-muted-stone text-base leading-relaxed">Our job is simple. Find what is holding growth back, focus on the highest-impact work, and help the company scale with more confidence.</p>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Our Origin — Two-Column Story -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <div>
+          <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">Our Origin</p>
+          <h2 class="font-headline text-2xl text-cream mb-6">Built to Close the Strategy Gap</h2>
+          <p class="text-muted-stone text-base leading-relaxed mb-4">My Site was founded on a simple observation: most growth agencies operate like production shops. They run campaigns, report on metrics, and optimize what they're told to optimize. The strategic thinking — the part that actually drives compounding growth — is either missing or siloed from execution.</p>
+          <p class="text-muted-stone text-base leading-relaxed">We built My Site to close that gap. Every engagement starts with strategy and stays grounded in evidence. The Acceleration Framework isn't a sales pitch — it's literally how we work. Diagnose, test, learn, scale. Every cycle makes the next one faster.</p>
+        </div>
+        <div>
+          <div class="relative rounded-brand-md overflow-hidden">
+            <img
+              src="/images/founder-portrait-nyc-tight-crop.jpg"
+              alt="Founder of My Site"
+              class="w-full max-h-[400px] object-cover object-[50%_20%]"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/20 to-transparent"></div>
+            <div class="absolute inset-0 bg-amber/10 mix-blend-multiply"></div>
+          </div>
+          <p class="font-mono text-xs text-muted-stone mt-3">Founder, My Site Agency</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Proof Callout -->
+  <section class="mx-6 lg:mx-8 max-w-5xl md:mx-auto">
+    <div class="bg-warm-slate py-10 md:py-12 rounded-brand-md">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <p class="font-headline text-xl md:text-2xl text-cream leading-snug italic">"Every cycle makes the next one faster. That's not a tagline — it's the math behind the Acceleration Framework."</p>
+        <p class="font-mono text-xs text-muted-stone mt-4">— My Site's operating principle</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Believe — Structured Values -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">What We Believe</p>
+      <h2 class="font-headline text-2xl text-cream mb-8">Principles That Shape Every Engagement</h2>
+      <div class="grid gap-8 md:gap-10 stagger-children">
+        <div class="border-l-2 border-gold pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">Evidence over opinion.</h3>
+          <p class="text-muted-stone text-base leading-relaxed mb-2">Every recommendation we make is grounded in data — not instinct, not trend reports, not what worked at our last company. Markets change. Audiences evolve. The only thing that stays reliable is a disciplined testing process.</p>
+          <p class="font-mono text-xs text-gold/80 mt-2">→ 500+ experiments run across client portfolios</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">Compounding over campaigns.</h3>
+          <p class="text-muted-stone text-base leading-relaxed mb-2">One-off campaigns create spikes. Systems create curves. We build the systems — the testing frameworks, the learning loops, the feedback mechanisms — that make growth compound over time instead of resetting every quarter.</p>
+          <p class="font-mono text-xs text-gold/80 mt-2">→ Clients average 32% conversion lift through systematic testing</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">Honesty about what we don't know.</h3>
+          <p class="text-muted-stone text-base leading-relaxed mb-2">The most dangerous thing in growth marketing is false certainty. We'd rather say "we don't know yet, but here's how we'll find out" than pretend we have the answer. That intellectual honesty is what keeps the strategy sharp and the results real.</p>
+          <p class="font-mono text-xs text-gold/80 mt-2">→ Every engagement starts with a diagnostic — not a pitch deck</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonials -->
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <p class="font-mono text-xs text-muted-stone tracking-[0.15em] uppercase text-center mb-8">What Our Clients Say</p>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-warm-slate rounded-brand-md p-6 md:p-8 border border-dark-umber border-t-2 border-t-gold/20">
+          <p class="text-gold/60 text-2xl mb-3">"</p>
+          <p class="text-cream/90 text-base leading-relaxed italic mb-6">My Site is a growth and advertising powerhouse. Their data-driven approach and relentless optimization transformed our campaigns. They don't just run ads — they build systems that compound results over time.</p>
+          <div>
+            <p class="text-cream font-medium text-sm">Mike Fard</p>
+            <p class="font-mono text-xs text-muted-stone mt-0.5">AI Marketing, Intel</p>
+          </div>
+        </div>
+        <div class="bg-warm-slate rounded-brand-md p-6 md:p-8 border border-dark-umber border-t-2 border-t-gold/20">
+          <p class="text-gold/60 text-2xl mb-3">"</p>
+          <p class="text-cream/90 text-base leading-relaxed italic mb-6">My Site team are some of the best marketers I have ever worked with. They combine deep strategic thinking with flawless execution. Our growth metrics improved across every channel they touched.</p>
+          <div>
+            <p class="text-cream font-medium text-sm">Collier Hamm</p>
+            <p class="font-mono text-xs text-muted-stone mt-0.5">Director of Growth, Removery</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">Questions About Working With Us</p>
+      <h2 class="font-headline text-2xl text-cream mb-8">Frequently Asked Questions</h2>
+      <div class="space-y-8">
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What kind of companies does My Site work with?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">We work primarily with SaaS, PLG (product-led growth), and AI companies that need to scale acquisition and retention systematically. Our clients range from growth-stage startups to enterprise brands like Bloomberg, Samsung, and Intel.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">How is My Site different from other growth marketing agencies?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">Most growth agencies operate like production shops — they run campaigns and report metrics. We start with strategy and stay grounded in evidence. Our Acceleration Framework (Diagnose → Spark → Amplify) finds what is holding growth back, launches focused tests, and scales what works into a repeatable system.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What is the Acceleration Framework?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">The Acceleration Framework is our three-phase methodology: Diagnose (find what is holding growth back), Spark (launch focused tests across the highest-impact growth levers), and Amplify (scale what works and turn it into a repeatable system). Every engagement follows this framework, whether it's a 90-Day Jumpstart or an ongoing partnership.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What results has My Site achieved?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">We've generated $200M+ in attributable client revenue, managed $50M+ in ad spend, tested 500+ creative variants monthly, and delivered a 32% average conversion lift across client portfolios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- CTA Section -->
+  <section class="py-16 md:py-20 text-center border-t border-dark-umber">
+    <div class="max-w-2xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-4">Let's Find Out What's Actually Working</h2>
+      <p class="text-muted-stone text-base leading-relaxed mb-8">One conversation. No pitch deck. Just a clear-eyed look at your growth situation and whether we can help.</p>
+      <a href="/contact" class="btn-cta">Book a Free Strategy Call</a>
+      <p class="font-mono text-xs text-muted-stone mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,546 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EmailSignup from '../../components/EmailSignup.astro';
+
+export async function getStaticPaths() {
+  const now = Date.now();
+  const entries = (await getCollection('blog'))
+    .filter(e => !e.data.draft && e.data.publishDate.getTime() <= now);
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const formattedDate = entry.data.publishDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+const modifiedDate = entry.data.lastModified ?? entry.data.publishDate;
+const wasUpdated = entry.data.lastModified && entry.data.lastModified.getTime() !== entry.data.publishDate.getTime();
+const formattedModifiedDate = wasUpdated
+  ? modifiedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC' })
+  : null;
+
+// Extract H2 headings for TOC
+const headings = entry.body ? [...entry.body.matchAll(/^## (.+)$/gm)].map(m => ({
+  text: m[1],
+  id: m[1].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+})) : [];
+const showToc = headings.length >= 3;
+
+// Author data (bios + schema)
+const authorData: Record<string, { role: string; bio: string; url?: string; jobTitle?: string; sameAs?: string[] }> = {
+  'Your Name Hernandez': {
+    role: 'Founder',
+    bio: 'Previously led growth at TubeBuddy (acquired by BENlabs), scaled Bloomberg\'s first DTC subscription, and drove measurable growth for brands like Verizon, Samsung, and Intel.',
+    url: 'https://www.linkedin.com/in/yourprofile/',
+    jobTitle: 'Founder & CEO',
+    sameAs: ['https://www.linkedin.com/in/yourprofile/', 'https://x.com/yourhandle'],
+  },
+  'Belen Crespo': {
+    role: 'Growth Strategist',
+    bio: 'Focused on helping B2B companies build scalable acquisition systems.',
+    url: 'https://www.linkedin.com/in/belen-crespo/',
+    jobTitle: 'Growth Strategist',
+    sameAs: ['https://www.linkedin.com/in/belen-crespo/'],
+  },
+};
+
+const authorInfo = authorData[entry.data.author] || { role: '', bio: '' };
+const authorInitial = entry.data.author.charAt(0);
+const authorUrl = authorData[entry.data.author]?.url;
+
+const isSalesIntent = entry.data.postType === 'Case Study' || entry.data.postType === 'Workflow';
+
+// Related posts
+const allPosts = (await getCollection('blog'))
+  .filter(p => !p.data.draft && p.data.publishDate.getTime() <= Date.now())
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+const overlapsCurrent = (p: typeof entry) =>
+  p.data.categories.some(c => entry.data.categories.includes(c));
+const related = allPosts
+  .filter(p => p.id !== entry.id)
+  .sort((a, b) =>
+    (overlapsCurrent(a) ? -1 : 1) -
+    (overlapsCurrent(b) ? -1 : 1)
+  )
+  .slice(0, 3);
+
+// Meta description: prefer an explicit frontmatter override, otherwise trim the
+// excerpt to ~155 chars at a word boundary so it isn't truncated in SERPs.
+// The full excerpt still renders on-page; only the meta/JSON-LD value is shortened.
+const truncateAtWord = (text: string, max = 155) => {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[.,;:!?\s]+$/, '') + '…';
+};
+const metaDescription = entry.data.metaDescription ?? truncateAtWord(entry.data.excerpt);
+---
+
+<BaseLayout
+  title={entry.data.metaTitle ?? (entry.data.title + ' — My Site')}
+  description={metaDescription}
+  ogImage={entry.data.featuredImage ? new URL(entry.data.featuredImage, 'https://example.com').href : undefined}
+>
+  <!-- BlogPosting JSON-LD -->
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": entry.data.title,
+      "datePublished": entry.data.publishDate.toISOString(),
+      "dateModified": modifiedDate.toISOString(),
+      "author": {
+        "@type": "Person",
+        "name": entry.data.author,
+        ...(authorData[entry.data.author] ? {
+          "url": authorData[entry.data.author].url,
+          "jobTitle": authorData[entry.data.author].jobTitle,
+          "sameAs": authorData[entry.data.author].sameAs
+        } : {})
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "My Site",
+        "url": "https://example.com"
+      },
+      "description": metaDescription,
+      "image": entry.data.featuredImage || "/images/blog-team-gathered-laptop.jpg",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://example.com/blog/${entry.id}`
+      },
+      "url": `https://example.com/blog/${entry.id}`
+    })} />
+    <meta property="article:published_time" content={entry.data.publishDate.toISOString()} />
+    <meta property="article:modified_time" content={modifiedDate.toISOString()} />
+    <meta property="article:author" content={entry.data.author} />
+    {entry.data.categories.map(cat => <meta property="article:section" content={cat} />)}
+    {entry.data.faqs && entry.data.faqs.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": entry.data.faqs.map((faq: { question: string; answer: string }) => ({
+          "@type": "Question",
+          "name": faq.question,
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": faq.answer
+          }
+        }))
+      })} />
+    )}
+  </Fragment>
+  <!-- Header -->
+  <section class="pt-12 md:pt-16 pb-6">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <span class="font-mono text-xs text-gold tracking-wider uppercase">
+        {entry.data.categories[0]}
+      </span>
+      <time datetime={entry.data.publishDate.toISOString()} class="block font-mono text-xs text-muted-stone tracking-wide mt-2">
+        {formattedDate}
+      </time>
+      {wasUpdated && (
+        <p class="font-mono text-[11px] text-gold/70 tracking-wide mt-1">
+          Last updated <time datetime={modifiedDate.toISOString()}>{formattedModifiedDate}</time>
+        </p>
+      )}
+      <h1 class="font-headline text-3xl md:text-4xl text-cream mt-4" style="letter-spacing: -0.03em; line-height: 1.15;">
+        {entry.data.title}
+      </h1>
+      <address class="font-body text-sm text-muted-stone mt-4 not-italic">
+        By {authorUrl ? (
+          <a href={authorUrl} class="text-teal underline underline-offset-2 hover:opacity-80" style="transition-property: opacity; transition-duration: 150ms;" target="_blank" rel="noopener noreferrer author">{entry.data.author}</a>
+        ) : (
+          <span>{entry.data.author}</span>
+        )}
+      </address>
+    </div>
+  </section>
+
+  <!-- Banner Image -->
+  <section class="px-6 lg:px-8 pb-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="relative rounded-brand-md overflow-hidden">
+        <img
+          src={entry.data.featuredImage || '/images/blog-team-gathered-laptop.jpg'}
+          alt={entry.data.title}
+          class="w-full h-auto max-h-[350px] object-cover"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-amber/10 mix-blend-multiply"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Table of Contents -->
+  {showToc && (
+    <section class="px-6 lg:px-8 pb-6">
+      <div class="max-w-3xl mx-auto">
+        <details open class="bg-warm-slate border border-dark-umber rounded-brand-md p-5 md:p-6">
+          <summary class="font-headline text-sm text-cream cursor-pointer select-none">In this article</summary>
+          <nav class="mt-3">
+            <ul class="space-y-2">
+              {headings.map(h => (
+                <li>
+                  <a
+                    href={`#${h.id}`}
+                    class="font-body text-sm text-muted-stone hover:text-teal transition-colors duration-150"
+                    style="transition-property: color;"
+                  >
+                    {h.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </details>
+      </div>
+    </section>
+  )}
+
+  <!-- Content Body -->
+  <section class="py-8 md:py-12">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <div class="blog-content">
+        <Content />
+
+        <!-- Mid-article CTA: rendered here, then moved mid-body by client script if there are 3+ H2s -->
+        <div id="mid-article-cta">
+          {isSalesIntent ? (
+            <div class="bg-warm-slate rounded-brand-md p-6 md:p-8 my-10 border border-dark-umber text-center">
+              <p class="font-headline text-lg text-cream" style="letter-spacing: -0.02em;">Seeing patterns like this in your own growth data?</p>
+              <p class="font-body text-sm text-muted-stone mt-2 leading-relaxed">We help growth-stage companies diagnose exactly what's working and what's not.</p>
+              <a href="/contact" class="btn-cta mt-5 inline-block">Book a Free Strategy Call</a>
+            </div>
+          ) : (
+            <EmailSignup variant="compact" />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Author Bio -->
+  <section class="px-6 lg:px-8 pb-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-start gap-4 bg-warm-slate border border-dark-umber rounded-brand-md p-6 md:p-8">
+        <div class="shrink-0 w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center">
+          <span class="font-headline text-lg text-gold">{authorInitial}</span>
+        </div>
+        <div>
+          {authorUrl ? (
+            <a href={authorUrl} class="font-headline text-cream text-base hover:text-teal" style="transition-property: color; transition-duration: 150ms;" target="_blank" rel="noopener noreferrer author">{entry.data.author}</a>
+          ) : (
+            <p class="font-headline text-cream text-base">{entry.data.author}</p>
+          )}
+          {authorInfo.role && (
+            <p class="font-mono text-xs text-gold tracking-wider uppercase mt-0.5">{authorInfo.role}</p>
+          )}
+          {authorInfo.bio && (
+            <p class="font-body text-sm text-muted-stone mt-2 leading-relaxed">{authorInfo.bio}</p>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  {entry.data.faqs && entry.data.faqs.length > 0 && (
+    <section class="px-6 lg:px-8 pb-10">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-headline text-xl text-cream mb-6">Frequently Asked Questions</h2>
+        <div class="space-y-6">
+          {entry.data.faqs.map((faq: { question: string; answer: string }) => (
+            <div class="border-l-2 border-dark-umber pl-6">
+              <h3 class="text-cream font-medium text-base mb-2">{faq.question}</h3>
+              <p class="text-muted-stone text-base leading-relaxed">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Related Posts -->
+  <section class="px-6 lg:px-8 pb-12">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="font-headline text-xl text-cream">Keep Reading</h3>
+        <a
+          href="/blog"
+          class="font-body text-sm text-teal hover:opacity-80 transition-opacity duration-150"
+          style="transition-property: opacity;"
+        >
+          View all posts &rarr;
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {related.map((post) => {
+          const imgSrc = post.data.featuredImage || 'https://placehold.co/600x340/1E1B18/C9A96E?text=Blog';
+          const date = post.data.publishDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
+          const isoDate = post.data.publishDate.toISOString();
+          return (
+            <a
+              href={`/blog/${post.id}`}
+              class="related-card block bg-warm-slate border border-dark-umber rounded-brand-md overflow-hidden card-elevated card-glow-hover focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
+            >
+              <div class="relative h-[120px] img-zoom-container">
+                <img src={imgSrc} alt={post.data.title} class="w-full h-full object-cover" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent"></div>
+                <div class="absolute inset-0 bg-amber/10 mix-blend-multiply"></div>
+              </div>
+              <div class="p-4 md:p-5">
+                <div class="flex items-center gap-2">
+                  <span class="font-mono text-[10px] text-gold tracking-wider uppercase">{post.data.categories[0]}</span>
+                  <time datetime={isoDate} class="font-mono text-[10px] text-muted-stone tracking-wide">{date}</time>
+                </div>
+                <h4 class="font-headline text-sm text-cream mt-2 leading-snug line-clamp-2">{post.data.title}</h4>
+              </div>
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA: book-a-call primary for sales-intent posts (with email fallback), email signup primary for educational -->
+  {isSalesIntent ? (
+    <>
+      <section class="py-12 md:py-16 text-center border-t border-dark-umber">
+        <div class="max-w-2xl mx-auto px-6 lg:px-8">
+          <h2 class="font-headline text-2xl md:text-3xl text-cream" style="letter-spacing: -0.03em;">Ready to Turn These Ideas Into Results?</h2>
+          <p class="font-body text-muted-stone mt-4 leading-relaxed">We don't just write about growth, we build the systems that make it compound.</p>
+          <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call</a>
+          <p class="text-cream/30 text-[13px] mt-4 text-center">Typically responds within 24 hours</p>
+        </div>
+      </section>
+      <section class="pb-12 md:pb-16">
+        <div class="max-w-2xl mx-auto px-6 lg:px-8">
+          <EmailSignup
+            variant="compact"
+            heading="Not ready to talk? Get the next post in your inbox."
+            subhead="Short emails. New posts as they ship."
+            bookCallLink={false}
+          />
+        </div>
+      </section>
+    </>
+  ) : (
+    <EmailSignup variant="full" />
+  )}
+</BaseLayout>
+
+<style>
+  .blog-content :global(h2) {
+    font-family: var(--font-headline);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    scroll-margin-top: 5rem;
+  }
+
+  .blog-content :global(h3) {
+    font-family: var(--font-headline);
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .blog-content :global(p) {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .blog-content :global(strong) {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  .blog-content :global(ul),
+  .blog-content :global(ol) {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .blog-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-content :global(a:not(.btn-cta)) {
+    color: var(--color-accent-teal);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition-property: opacity;
+    transition-duration: 150ms;
+  }
+
+  .blog-content :global(a:not(.btn-cta):hover) {
+    opacity: 0.8;
+  }
+
+  .blog-content :global(blockquote) {
+    border-left: 2px solid var(--color-accent-gold);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--color-text-secondary);
+  }
+
+  /* --- Inline video --- */
+  .blog-content :global(video) {
+    display: block;
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    margin: 1.5rem auto;
+    border-radius: 12px;
+    background: #000;
+    box-shadow: 0 16px 40px -16px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--color-border-subtle);
+  }
+
+  .blog-content :global(.video-row) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .blog-content :global(.video-row video) {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  /* --- Tables --- */
+  .blog-content :global(.table-wrapper) {
+    overflow-x: auto;
+    margin: 2rem 0;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 8px;
+    background: var(--color-surface-elevated);
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .blog-content :global(table) {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+
+  .blog-content :global(thead) {
+    background: rgba(201, 169, 110, 0.06);
+  }
+
+  .blog-content :global(th) {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-accent-gold);
+    text-align: left;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-border-subtle);
+    vertical-align: top;
+  }
+
+  .blog-content :global(td) {
+    color: var(--color-text-secondary);
+    padding: 1rem 1.125rem;
+    vertical-align: top;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--color-border-subtle);
+  }
+
+  .blog-content :global(tbody tr:last-child td) {
+    border-bottom: none;
+  }
+
+  .blog-content :global(tbody tr:nth-child(even)) {
+    background: rgba(255, 255, 255, 0.015);
+  }
+
+  .blog-content :global(tbody td:first-child) {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+
+  @media (max-width: 640px) {
+    .blog-content :global(td),
+    .blog-content :global(th) {
+      padding: 0.75rem 0.875rem;
+    }
+    .blog-content :global(table) {
+      font-size: 0.875rem;
+    }
+  }
+
+  .related-card {
+    transition-property: transform, opacity, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .related-card:hover {
+    transform: translateY(-4px);
+    opacity: 0.92;
+  }
+
+  .related-card:active {
+    transform: translateY(-1px);
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Add IDs to H2 headings for TOC anchor links
+  document.querySelectorAll('.blog-content h2').forEach(h2 => {
+    if (!h2.id && h2.textContent) {
+      h2.id = h2.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    }
+  });
+
+  // Wrap tables in a horizontally scrollable container
+  document.querySelectorAll('.blog-content table').forEach(table => {
+    if (table.parentElement?.classList.contains('table-wrapper')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'table-wrapper';
+    table.parentNode?.insertBefore(wrap, table);
+    wrap.appendChild(table);
+  });
+
+  // Move the mid-article CTA into the actual middle of the body if there are enough H2s
+  (() => {
+    const cta = document.getElementById('mid-article-cta');
+    const content = document.querySelector('.blog-content');
+    if (!cta || !content) return;
+    const h2s = Array.from(content.querySelectorAll('h2')).filter(h => !cta.contains(h));
+    if (h2s.length < 3) return;
+    const target = h2s[Math.floor(h2s.length / 2)];
+    target.parentNode?.insertBefore(cta, target);
+  })();
+</script>

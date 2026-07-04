@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+  client: string;
+  challenge: string;
+  heroMetric: string;
+  heroMetricLabel: string;
+  service: string;
+  slug: string;
+  featuredImage?: string;
+  secondaryMetric?: string;
+  secondaryMetricLabel?: string;
+  resultSummary?: string;
+}
+
+const { title, client, challenge, heroMetric, heroMetricLabel, service, slug, featuredImage, secondaryMetric, secondaryMetricLabel, resultSummary } = Astro.props;
+const imageSrc = featuredImage || 'https://placehold.co/600x340/1E1B18/C9A96E?text=Case+Study';
+const categorySlug = service.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+---
+
+<a
+  href={`/case-studies/${slug}`}
+  class="case-study-card card-elevated card-glow-hover block bg-warm-slate border border-dark-umber rounded-brand-md overflow-hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-4"
+  data-category={categorySlug}
+>
+  <div class="relative h-[160px] img-zoom-container">
+    <img src={imageSrc} alt={title} class="w-full h-full object-cover" loading="lazy" />
+    <div class="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent"></div>
+    <div class="absolute inset-0 bg-amber/10 mix-blend-multiply"></div>
+  </div>
+  <div class="p-6 md:p-8">
+    <span class="font-mono text-xs text-gold tracking-wider uppercase">{service}</span>
+    <p class="text-xs font-body text-muted-stone tracking-wide uppercase mt-3">{client}</p>
+    {resultSummary ? (
+      <p class="font-headline text-2xl md:text-[1.7rem] leading-tight text-gold mt-4">{resultSummary}</p>
+    ) : (
+      <>
+        <p class="metric-value text-3xl md:text-4xl mt-4 text-gold">{heroMetric}</p>
+        <p class="metric-label mt-1 text-cream/60">{heroMetricLabel}</p>
+      </>
+    )}
+    <p class="font-body text-sm text-cream/60 mt-4 leading-relaxed">{challenge}</p>
+    {!resultSummary && secondaryMetric && (
+      <div class="flex items-baseline gap-2 mt-3 pt-3 border-t border-dark-umber/50">
+        <span class="font-mono text-sm text-gold/80">{secondaryMetric}</span>
+        <span class="metric-label text-xs text-cream/60">{secondaryMetricLabel}</span>
+      </div>
+    )}
+    <span class="inline-flex items-center mt-6 font-body text-sm text-cream hover:text-gold transition-colors duration-200">
+      Read Case Study <span class="ml-2">→</span>
+    </span>
+  </div>
+</a>
+
+<style>
+  .case-study-card {
+    transition-property: transform, opacity, box-shadow;
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .case-study-card:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
+
+  .case-study-card:active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+</style>

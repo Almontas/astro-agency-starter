@@ -1,0 +1,258 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
+---
+
+<BaseLayout title="Contact My Site — Free Growth Diagnostic" description="Book a free 30-minute growth diagnostic with My Site. No pitch deck — just a clear-eyed look at your growth situation.">
+
+  <!-- Hero -->
+  <section class="pt-12 md:pt-16 pb-8">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+      <p class="font-mono text-xs text-gold tracking-[0.15em] uppercase mb-4">Book a Free Strategy Call</p>
+      <h1 class="font-headline text-3xl md:text-4xl tracking-tightest text-cream">Let's Find What's Holding Growth Back</h1>
+      <p class="text-muted-stone text-base leading-relaxed max-w-xl mx-auto mt-4">One conversation. No pitch deck. Just a clear look at what's slowing growth, where acquisition costs are rising, and whether we're the right team to help you scale.</p>
+    </div>
+  </section>
+
+  <!-- Two-Column: Proof + Form -->
+  <section class="pb-24">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
+        <!-- Left: Proof Content -->
+        <ScrollReveal>
+          <!-- What to Expect -->
+          <div class="bg-warm-slate rounded-brand-md p-6 md:p-8 mb-6">
+            <h3 class="font-headline text-lg text-cream mb-4">What to Expect</h3>
+            <ul class="space-y-4">
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <div>
+                  <p class="text-cream text-sm font-medium leading-snug">A 30-minute growth review</p>
+                  <p class="text-muted-stone text-sm leading-relaxed mt-1">We'll look at your acquisition, conversion, and growth bottlenecks.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <div>
+                  <p class="text-cream text-sm font-medium leading-snug">A clear read on what may be holding growth back</p>
+                  <p class="text-muted-stone text-sm leading-relaxed mt-1">You'll get a direct point of view on where acquisition costs may be rising, where conversion may be underperforming, and what should be tested next.</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-gold flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <div>
+                  <p class="text-cream text-sm font-medium leading-snug">Useful next steps</p>
+                  <p class="text-muted-stone text-sm leading-relaxed mt-1">You'll leave with specific ideas you can act on, whether or not we work together.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="border-t border-dark-umber mt-5 pt-4">
+              <p class="font-mono text-xs text-muted-stone tracking-wider">We respond within 24 hours.</p>
+            </div>
+          </div>
+
+          <!-- Testimonial -->
+          <div class="border-l-2 border-gold pl-6 mb-6">
+            <blockquote class="text-cream/90 text-sm leading-relaxed italic">"Run, don't walk, towards the opportunity of working with My Site."</blockquote>
+            <div class="flex items-center gap-3 mt-4">
+              <img src="/images/headshots/headshot-matt-plotnik.jpeg" alt="Matt Plotnik" class="w-10 h-10 rounded-full object-cover" loading="lazy" />
+              <div>
+                <p class="text-cream text-sm font-medium">Matt Plotnik</p>
+                <p class="text-muted-stone text-xs">Head of Marketing, Apple Music</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Client Logos -->
+          <div>
+            <p class="font-mono text-xs text-muted-stone tracking-wider uppercase mb-4">Trusted by growth teams at</p>
+            <div class="flex items-center gap-6 flex-wrap">
+              <img src="/logos/bloomberg.svg" alt="Bloomberg" class="h-4 md:h-5" style="filter: brightness(0) invert(0.92) sepia(0.1); opacity: 0.5;" loading="lazy" />
+              <img src="/logos/samsung.svg" alt="Samsung" class="h-4 md:h-5" style="filter: brightness(0) invert(0.92) sepia(0.1); opacity: 0.5;" loading="lazy" />
+              <img src="/logos/nfl.svg" alt="NFL" class="h-4 md:h-5" style="filter: brightness(0) invert(0.92) sepia(0.1); opacity: 0.5;" loading="lazy" />
+              <img src="/logos/verizon.svg" alt="Verizon" class="h-4 md:h-5" style="filter: brightness(0) invert(0.92) sepia(0.1); opacity: 0.5;" loading="lazy" />
+              <img src="/logos/citi.svg" alt="Citi" class="h-4 md:h-5" style="filter: brightness(0) invert(0.92) sepia(0.1); opacity: 0.5;" loading="lazy" />
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <!-- Right: Form -->
+        <form id="contact-form" class="space-y-6" novalidate>
+          <!-- Honeypot: bots auto-fill, humans never see -->
+          <input type="text" name="_gotcha" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;" tabindex="-1" autocomplete="off" />
+          <!-- Timestamp for time-based check -->
+          <input type="hidden" name="_loadedAt" id="loadedAt" value="" />
+
+          <div>
+            <label for="name" class="block font-body text-sm text-cream mb-2">Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your name" class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm placeholder:text-muted-stone/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo" />
+          </div>
+
+          <div>
+            <label for="email" class="block font-body text-sm text-cream mb-2">Work Email</label>
+            <input type="email" id="email" name="email" required placeholder="you@company.com" class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm placeholder:text-muted-stone/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo" />
+          </div>
+
+          <div>
+            <label for="company" class="block font-body text-sm text-cream mb-2">Company</label>
+            <input type="text" id="company" name="company" placeholder="Your company (optional)" class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm placeholder:text-muted-stone/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo" />
+          </div>
+
+          <div>
+            <label for="revenue" class="block font-body text-sm text-cream mb-2">What's your current annual revenue?</label>
+            <select id="revenue" name="revenue" required class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo">
+              <option value="" disabled selected class="text-muted-stone/50">Select your revenue range</option>
+              <option value="Under $1M ARR">Under $1M ARR</option>
+              <option value="$1M–$5M ARR">$1M – $5M ARR</option>
+              <option value="$5M–$20M ARR">$5M – $20M ARR</option>
+              <option value="$20M+ ARR">$20M+ ARR</option>
+              <option value="Pre-revenue">Pre-revenue</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="service_interest" class="block font-body text-sm text-cream mb-2">What are you interested in?</label>
+            <select id="service_interest" name="service_interest" required class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo">
+              <option value="" disabled selected class="text-muted-stone/50">Select a service</option>
+              <option value="growth-strategy">Growth Strategy</option>
+              <option value="paid-media">Paid Media</option>
+              <option value="ai-performance-creative">AI Performance Creative</option>
+              <option value="conversion-optimization">Conversion Optimization</option>
+              <option value="lifecycle-retention">Lifecycle & Retention</option>
+              <option value="aeo-geo">AEO / GEO Optimization</option>
+              <option value="not-sure">Not sure yet</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="growth_challenge" class="block font-body text-sm text-cream mb-2">What's your biggest growth challenge right now?</label>
+            <select id="growth_challenge" name="growth_challenge" class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 transition-opacity duration-150 ease-out-expo">
+              <option value="" disabled selected class="text-muted-stone/50">Select one (optional)</option>
+              <option value="growth-slowed">Growth has slowed</option>
+              <option value="cac-rising">CAC is rising</option>
+              <option value="paid-not-scaling">Paid media is not scaling</option>
+              <option value="conversion-low">Conversion is too low</option>
+              <option value="lifecycle-retention">Lifecycle or retention needs work</option>
+              <option value="need-strategy">We need a clearer growth strategy</option>
+              <option value="not-sure">Not sure yet</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="goals" class="block font-body text-sm text-cream mb-2">Anything else you'd like us to know?</label>
+            <textarea id="goals" name="goals" rows="3" placeholder="Budget range, timeline, current challenges — whatever's helpful." class="w-full bg-warm-slate border border-dark-umber rounded-brand-sm px-4 py-3 text-cream font-body text-sm placeholder:text-muted-stone/50 focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold/50 resize-y transition-opacity duration-150 ease-out-expo"></textarea>
+          </div>
+
+          <div class="cf-turnstile" data-sitekey="0x4AAAAAACsdZSYJpLRBUTCi" data-theme="dark"></div>
+
+          <div id="form-error" class="hidden text-red-400 text-sm font-body"></div>
+
+          <button type="submit" id="submit-btn" class="btn-cta w-full mt-8 text-center">Book My Strategy Call</button>
+
+          <p class="font-mono text-[0.6rem] text-muted-stone mt-3 text-center">No spam. No obligation. We'll respond within 24 hours.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alternative Contact -->
+  <section class="py-8 text-center border-t border-dark-umber">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <p class="text-muted-stone text-sm">Prefer email? Reach us at <a href="mailto:hello@example.com" class="text-gold hover:underline">hello@example.com</a></p>
+    </div>
+  </section>
+
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+  <script>
+    // Record load timestamp for time-based spam check
+    document.getElementById('loadedAt').value = Date.now().toString();
+
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const submitBtn = document.getElementById('submit-btn');
+      const errorDiv = document.getElementById('form-error');
+
+      // Reset error state
+      errorDiv.classList.add('hidden');
+      errorDiv.textContent = '';
+
+      // Disable button during submission
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Booking…';
+
+      // Client-side validation
+      const name = form.querySelector('#name').value.trim();
+      const email = form.querySelector('#email').value.trim();
+      const revenue = form.querySelector('#revenue').value;
+      const serviceInterest = form.querySelector('#service_interest').value;
+
+      if (!name || !email || !revenue || !serviceInterest) {
+        errorDiv.textContent = 'Please fill in all required fields.';
+        errorDiv.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Book My Strategy Call';
+        return;
+      }
+
+      // Collect form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Get Turnstile token
+      const turnstileResponse = formData.get('cf-turnstile-response');
+      if (!turnstileResponse) {
+        errorDiv.textContent = 'Please complete the verification challenge.';
+        errorDiv.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Book My Strategy Call';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/submit-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          if (window.lintrk) window.lintrk('track', { conversion_id: 27285433 });
+          // FB Pixel: soft "Lead" conversion on every successful submit (all leads).
+          // TODO(fb-pixel): uncomment once the pixel base code is installed in BaseLayout.
+          // if (window.fbq) fbq('track', 'Lead');
+          // Qualified leads ($1M+ ARR) go to the booking calendar (/book);
+          // everyone else gets the standard thank-you and a manual email.
+          const qualifiedRevenue = ['$1M–$5M ARR', '$5M–$20M ARR', '$20M+ ARR'];
+          if (qualifiedRevenue.includes(revenue)) {
+            try {
+              sessionStorage.setItem('booking_name', name);
+              sessionStorage.setItem('booking_email', email);
+            } catch (_) { /* sessionStorage unavailable; calendar still loads unprefilled */ }
+            window.location.href = '/book';
+          } else {
+            window.location.href = '/thank-you';
+          }
+        } else {
+          errorDiv.textContent = result.error || 'Something went wrong. Please try again.';
+          errorDiv.classList.remove('hidden');
+          // Reset Turnstile for retry
+          if (window.turnstile) {
+            window.turnstile.reset();
+          }
+        }
+      } catch {
+        errorDiv.textContent = 'Network error. Please check your connection and try again.';
+        errorDiv.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Book My Strategy Call';
+      }
+    });
+  </script>
+
+</BaseLayout>

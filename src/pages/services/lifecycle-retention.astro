@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+import { gitLastModified } from '../../lib/gitLastModified.js';
+
+const caseStudies = await getCollection('case-studies');
+const retentionStudies = caseStudies.filter(s => ['myrecipes'].includes(s.id));
+
+const testimonials = await getCollection('testimonials');
+const mikeTestimonial = testimonials.find(t => t.id === 'mike-fard');
+---
+
+<BaseLayout title="Lifecycle & Retention | My Site" description="Acquisition gets the attention, but retention drives the math. We build automated sequences across email, in-app, and re-engagement that increase lifetime value by 25% or more.">
+
+  <!-- Service JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Lifecycle & Retention",
+    "provider": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Acquisition gets the attention, but retention drives the math. We build automated sequences across email, in-app messaging, and re-engagement channels that increase lifetime value by 25% or more.",
+    "url": "https://example.com/services/lifecycle-retention",
+    "dateModified": gitLastModified('src/pages/services/lifecycle-retention.astro', "2026-04-12")
+  })} />
+
+  <!-- HowTo JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How My Site Approaches Lifecycle & Retention",
+    "description": "A three-phase retention methodology that maps the full user journey, builds automated sequences at high-value intervention points, and feeds retention data back into the growth system.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Diagnose",
+        "text": "Find what is holding growth back."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Spark",
+        "text": "Launch focused tests across the highest-impact growth levers."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Amplify",
+        "text": "Scale what works and turn it into a repeatable system."
+      }
+    ]
+  })} />
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is lifecycle marketing and why does it matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Lifecycle marketing is the practice of reaching users with the right message at the right stage of their journey, from onboarding through renewal. It matters because acquisition costs keep rising, and the most efficient path to revenue growth is getting more value from the customers you already have."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does improving retention increase revenue?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 5% improvement in retention can increase customer lifetime value by 25% or more. Every retained user reduces the pressure on acquisition spending, improves unit economics, and creates compounding revenue over time."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What channels does My Site use for lifecycle marketing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We build automated sequences across email, in-app messaging, push notifications, and re-engagement campaigns. The specific mix depends on your product and user behavior, but the goal is always the same: reach the right user at the right moment."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does it take to see results from lifecycle optimization?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most clients see measurable improvements in activation and early retention within the first 30-60 days. The compounding effect on lifetime value builds over 3-6 months as optimized sequences reach more of your user base."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Back nav -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-8">
+    <a href="/services" class="inline-flex items-center text-sm text-muted-stone hover:text-gold transition-colors duration-150">
+      <span class="mr-1">←</span> All Services
+    </a>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-20 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Lifecycle & Retention</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        Acquisition Gets the Attention. Retention Drives the Math.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        We build automated sequences across email, in-app messaging, and re-engagement channels that move users from trial to activation to long-term revenue. A 5% improvement in retention can increase lifetime value by 25% or more.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <div class="border-y border-dark-umber py-8">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 md:gap-4 text-center md:text-left">
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="25" data-suffix="%+">25%+</p>
+          <p class="metric-label mt-1">LTV increase from retention</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="5" data-suffix="%">5%</p>
+          <p class="metric-label mt-1">retention improvement needed</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl">Every</p>
+          <p class="metric-label mt-1">touchpoint automated</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How We Approach -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">How We Approach Lifecycle & Retention</h2>
+      <div class="mt-10 space-y-10">
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 1</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Diagnose</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Find what is holding growth back.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 2</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Spark</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Launch focused tests across the highest-impact growth levers.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 3</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Amplify</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Scale what works and turn it into a repeatable system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- What Makes This Different -->
+  <section class="bg-warm-slate border-y border-dark-umber py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">What Makes This Different</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Most retention work is reactive. A user churns and then someone scrambles to win them back. We build the system before the churn happens. Automated sequences that trigger based on behavior, not calendar dates.</p>
+        <p class="text-muted-stone text-base leading-relaxed">Retention isn't a standalone function. It connects to every other growth lever. Acquisition data tells us which users are most likely to retain. Conversion data shows us where activation breaks down. We use all of it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {retentionStudies.map((study) => (
+          <CaseStudyCard
+            title={study.data.title}
+            client={study.data.client}
+            challenge={study.data.challenge}
+            heroMetric={study.data.heroMetric}
+            heroMetricLabel={study.data.heroMetricLabel}
+            service={study.data.service}
+            slug={study.id}
+            featuredImage={study.data.featuredImage}
+            secondaryMetric={study.data.secondaryMetric}
+            secondaryMetricLabel={study.data.secondaryMetricLabel}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {mikeTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{mikeTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{mikeTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{mikeTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Ready to turn retention into your growth engine?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's find the revenue hiding in your existing user base.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call →</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+  <!-- Last Updated -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pb-8 text-right">
+    <span class="font-mono text-xs text-muted-stone/60">Last updated: April 2026</span>
+  </div>
+
+</BaseLayout>

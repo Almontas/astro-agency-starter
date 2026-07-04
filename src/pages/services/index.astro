@@ -1,0 +1,441 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+
+const caseStudies = await getCollection('case-studies');
+const getStudy = (slug: string) => caseStudies.find(s => s.id === slug);
+
+const bloomberg = getStudy('bloomberg');
+const benlabs = getStudy('benlabs');
+const zencastr = getStudy('zencastr');
+const tubebuddy = getStudy('tubebuddy');
+const hedgefundalpha = getStudy('hedgefundalpha');
+const myrecipes = getStudy('myrecipes');
+
+const testimonials = await getCollection('testimonials');
+const collierTestimonial = testimonials.find(t => t.id === 'collier-hamm');
+---
+
+<BaseLayout title="Growth Marketing Services for SaaS & AI — My Site" description="Five integrated growth capabilities — paid media, AI creative, conversion optimization, lifecycle strategy, and AEO/GEO — working as one compounding engine.">
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What growth marketing services does My Site offer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site offers five integrated growth capabilities: Paid Media, AI Performance Creative, Conversion Optimization, Lifecycle & Retention, and Growth Strategy & Leadership. We also support AEO/GEO Optimization for companies that need stronger AI-search visibility."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How does My Site's integrated approach work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Instead of selling isolated channels, My Site built a system where paid media, creative, conversion optimization, lifecycle, and strategy reinforce each other. Every dollar of ad spend generates data that improves creative, creative insights improve conversion rates, and conversion data informs strategy — creating a compounding growth engine."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the best way to get started with My Site?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The most popular entry point is the 90-Day Jumpstart — a concentrated sprint to diagnose your growth landscape, run initial experiments, and deliver an actionable roadmap. Alternatively, you can book a free 30-minute diagnostic call to map your growth situation and identify which services would have the highest impact."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What industries does My Site specialize in?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site specializes in SaaS, PLG (product-led growth), and AI companies. Our clients include enterprise brands like Bloomberg, Samsung, and Intel, as well as growth-stage companies like TubeBuddy, Zencastr, and BENlabs."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Hero -->
+  <section class="py-16 md:py-24 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Services</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        Five Capabilities. One Growth System.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        We connect paid media, creative testing, conversion optimization, lifecycle, and strategy so your team can find what is holding growth back, lower acquisition costs, and scale with more confidence.
+      </p>
+      <div class="mt-10 flex items-baseline gap-3">
+        <span class="metric-value text-4xl md:text-5xl" data-count-to="200" data-prefix="$" data-suffix="M+">$200M+</span>
+        <span class="metric-label">in revenue generated for clients</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logo Bar -->
+
+  <!-- Sticky Anchor Nav -->
+  <nav class="sticky top-[72px] z-40 bg-espresso/95 backdrop-blur-sm border-b border-dark-umber" aria-label="Service sections">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex gap-6 overflow-x-auto scrollbar-hide py-3" role="tablist">
+        <a href="#paid-media" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">Paid Media</a>
+        <a href="#ai-creative" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">AI Creative</a>
+        <a href="#cro" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">CRO</a>
+        <a href="#lifecycle" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">Lifecycle</a>
+        <a href="#growth-strategy" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">Strategy</a>
+        <a href="#aeo-geo" class="service-nav-link whitespace-nowrap text-sm text-muted-stone hover:text-gold transition-colors duration-150 font-body tracking-wide">AEO/GEO</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Services Intro -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-b border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Growth System</span>
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">Growth does not usually improve from one channel alone.</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Paid media, creative, conversion, lifecycle, and strategy all need to work together.</p>
+        <p class="text-muted-stone text-base leading-relaxed">We help you connect those pieces into one growth system, so every test creates signal and every win has a path to scale.</p>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Service 1: Paid Media -->
+  <ScrollReveal>
+  <section id="paid-media" class="py-12 md:py-16 border-b border-dark-umber scroll-mt-32">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-start">
+        <div class="md:col-span-3">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">01</span>
+          <h2 class="font-headline text-2xl md:text-3xl text-cream mt-3">Paid Media</h2>
+          <div class="mt-6 space-y-4">
+            <p class="text-muted-stone text-base leading-relaxed">We manage paid acquisition across Google, Meta, LinkedIn, and TikTok — but channel management is table stakes. The real value is a compounding learning system where each month of spend makes the next month more efficient.</p>
+          </div>
+          <p class="font-mono text-sm text-gold/80 font-semibold mt-6">$50M+ managed ad spend</p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            <a href="/services/paid-media" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+            <a href="/case-studies/bloomberg" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See it in action: Bloomberg <span class="ml-1">→</span></a>
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          {bloomberg && (
+            <CaseStudyCard
+              title={bloomberg.data.title}
+              client={bloomberg.data.client}
+              challenge={bloomberg.data.challenge}
+              heroMetric={bloomberg.data.heroMetric}
+              heroMetricLabel={bloomberg.data.heroMetricLabel}
+              service={bloomberg.data.service}
+              slug={bloomberg.id}
+              featuredImage={bloomberg.data.featuredImage}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Service 2: AI Performance Creative -->
+  <ScrollReveal>
+  <section id="ai-creative" class="py-12 md:py-16 border-b border-dark-umber scroll-mt-32">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-start">
+        <div class="md:col-span-3">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">02</span>
+          <h2 class="font-headline text-2xl md:text-3xl text-cream mt-3">AI Performance Creative</h2>
+          <div class="mt-6 space-y-4">
+            <p class="text-muted-stone text-base leading-relaxed">AI doesn't replace creative strategy — it removes the production bottleneck. We generate, test, and iterate creative variations at 10x speed, each designed to test a specific hypothesis about what resonates with your audience.</p>
+          </div>
+          <p class="font-mono text-sm text-gold/80 font-semibold mt-6">500+ creative variants tested monthly</p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            <a href="/services/ai-performance-creative" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+            <a href="/case-studies/zencastr" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See it in action: Zencastr <span class="ml-1">→</span></a>
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          {zencastr && (
+            <CaseStudyCard
+              title={zencastr.data.title}
+              client={zencastr.data.client}
+              challenge={zencastr.data.challenge}
+              heroMetric={zencastr.data.heroMetric}
+              heroMetricLabel={zencastr.data.heroMetricLabel}
+              service={zencastr.data.service}
+              slug={zencastr.id}
+              featuredImage={zencastr.data.featuredImage}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Service 3: Conversion Optimization -->
+  <ScrollReveal>
+  <section id="cro" class="py-12 md:py-16 border-b border-dark-umber scroll-mt-32">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 items-start">
+        <div class="md:col-span-3">
+          <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">03</span>
+          <h2 class="font-headline text-2xl md:text-3xl text-cream mt-3">Conversion Optimization</h2>
+          <div class="mt-6 space-y-4">
+            <p class="text-muted-stone text-base leading-relaxed">Traffic without conversion is expensive noise. We run structured experiments on every decision surface — landing pages, signup flows, onboarding, pricing — so small wins compound into significant revenue.</p>
+          </div>
+          <p class="font-mono text-sm text-gold/80 font-semibold mt-6">32% avg. conversion lift</p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            <a href="/services/conversion-optimization" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+            <a href="/case-studies/tubebuddy" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See it in action: TubeBuddy <span class="ml-1">→</span></a>
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          {tubebuddy && (
+            <CaseStudyCard
+              title={tubebuddy.data.title}
+              client={tubebuddy.data.client}
+              challenge={tubebuddy.data.challenge}
+              heroMetric={tubebuddy.data.heroMetric}
+              heroMetricLabel={tubebuddy.data.heroMetricLabel}
+              service={tubebuddy.data.service}
+              slug={tubebuddy.id}
+              featuredImage={tubebuddy.data.featuredImage}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Mid-page CTA -->
+  <section class="py-12 md:py-16 text-center border-b border-dark-umber">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream headline-glow">Not sure which service you need?</h2>
+      <p class="text-muted-stone mt-3">We'll map your growth situation in 30 minutes.</p>
+      <a href="/contact" class="btn-cta mt-6 inline-block">Book a Free Strategy Call →</a>
+    </div>
+  </section>
+
+  <!-- Service 4: Lifecycle & Retention -->
+  <ScrollReveal>
+  <section id="lifecycle" class="py-12 md:py-16 border-b border-dark-umber scroll-mt-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">04</span>
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mt-3">Lifecycle & Retention</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Acquisition gets the attention, but retention drives the math. We build automated sequences across email, in-app messaging, and re-engagement channels that move users from trial to activation to long-term revenue.</p>
+        <p class="text-muted-stone text-base leading-relaxed">A 5% improvement in retention can increase lifetime value by 25% or more — and every retained user strengthens the unit economics that make acquisition sustainable.</p>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="/services/lifecycle-retention" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+        <a href="/case-studies/myrecipes" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See it in action: MyRecipes <span class="ml-1">→</span></a>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Gold Rule Separator -->
+  <hr class="gold-rule max-w-4xl mx-auto my-4" />
+
+  <!-- Service 5: Growth Strategy & Leadership -->
+  <ScrollReveal>
+  <section id="growth-strategy" class="py-12 md:py-16 scroll-mt-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">05</span>
+      <h2 class="font-headline text-2xl md:text-3xl text-gold mt-3">Growth Strategy & Leadership</h2>
+      <p class="text-muted-stone italic mt-2">A different tier of engagement</p>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Not every company is ready for full execution on day one. Growth Strategy & Leadership is a standalone strategic engagement for companies that need someone senior to diagnose the situation, build the roadmap, and set the direction.</p>
+        <p class="text-muted-stone text-base leading-relaxed">Sometimes strategy leads to a full engagement. Sometimes it doesn't. Both are fine. The value is in the clarity.</p>
+      </div>
+
+      <!-- 90-Day Jumpstart callout -->
+      <div class="bg-warm-slate border border-dark-umber border-l-4 border-l-gold/40 rounded-brand-md p-6 mt-8">
+        <h3 class="font-headline text-lg text-cream">90-Day Jumpstart</h3>
+        <p class="text-muted-stone text-sm leading-relaxed mt-2">Our most popular entry point — a concentrated sprint to map your growth landscape, identify the highest-value opportunities, and build an actionable roadmap with sequenced priorities.</p>
+        <a href="/contact" class="inline-flex items-center text-sm text-gold tracking-wide mt-4 hover:underline underline-offset-4">Learn about the Jumpstart <span class="ml-1">→</span></a>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="/services/growth-strategy" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+        <a href="/case-studies/hedgefundalpha" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See it in action: Hedge Fund Alpha <span class="ml-1">→</span></a>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Service 6: AEO / GEO Optimization -->
+  <ScrollReveal>
+  <section id="aeo-geo" class="py-12 md:py-16 border-t border-dark-umber scroll-mt-32">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gold/10 border border-gold/30 font-mono text-sm text-gold">06</span>
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mt-3">AEO / GEO Optimization</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">AI-powered search engines are changing how prospects discover solutions. AEO (Answer Engine Optimization) and GEO (Generative Engine Optimization) ensure your brand shows up when AI assistants recommend products in your category.</p>
+        <p class="text-muted-stone text-base leading-relaxed">We optimize your content, structured data, and authority signals so that ChatGPT, Perplexity, and Google AI Overviews surface your brand as the answer — not just a search result.</p>
+      </div>
+      <div class="flex flex-wrap gap-4 mt-6">
+        <a href="/services/aeo-geo" class="inline-flex items-center text-sm text-gold tracking-wide hover:underline underline-offset-4">How it works <span class="ml-1">→</span></a>
+        <a href="/case-studies/hedgefundalpha" class="inline-flex items-center text-sm text-cream/50 tracking-wide hover:text-cream hover:underline underline-offset-4">See AEO/GEO in action: Hedge Fund Alpha <span class="ml-1">→</span></a>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Service Comparison Table -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-2">Which Services Do You Need?</h2>
+      <p class="text-muted-stone text-base leading-relaxed mb-8">Every service works independently, but they compound when combined. Here's what each one solves.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="border-b border-dark-umber">
+              <th class="py-3 pr-4 font-mono text-sm text-gold tracking-wider">Service</th>
+              <th class="py-3 px-4 font-mono text-sm text-muted-stone tracking-wider">Best For</th>
+              <th class="py-3 px-4 font-mono text-sm text-muted-stone tracking-wider">Key Metric</th>
+              <th class="py-3 pl-4 font-mono text-sm text-muted-stone tracking-wider">Timeline</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Paid Media</td>
+              <td class="py-4 px-4 text-muted-stone">Scaling acquisition across Google, Meta, LinkedIn, TikTok</td>
+              <td class="py-4 px-4 text-gold font-mono">75% avg CPA reduction</td>
+              <td class="py-4 pl-4 text-muted-stone">Ongoing</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">AI Creative</td>
+              <td class="py-4 px-4 text-muted-stone">Breaking production bottlenecks, testing creative at scale</td>
+              <td class="py-4 px-4 text-gold font-mono">500+ variants/month</td>
+              <td class="py-4 pl-4 text-muted-stone">Ongoing</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">CRO</td>
+              <td class="py-4 px-4 text-muted-stone">Improving conversion across landing pages, signup, pricing</td>
+              <td class="py-4 px-4 text-gold font-mono">32% avg conversion lift</td>
+              <td class="py-4 pl-4 text-muted-stone">Ongoing</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Lifecycle</td>
+              <td class="py-4 px-4 text-muted-stone">Retention, activation, re-engagement sequences</td>
+              <td class="py-4 px-4 text-gold font-mono">25%+ LTV increase</td>
+              <td class="py-4 pl-4 text-muted-stone">Ongoing</td>
+            </tr>
+            <tr class="border-b border-dark-umber/50">
+              <td class="py-4 pr-4 text-cream font-medium">Growth Strategy</td>
+              <td class="py-4 px-4 text-muted-stone">Strategic direction, diagnostics, roadmap building</td>
+              <td class="py-4 px-4 text-gold font-mono">90-day clarity</td>
+              <td class="py-4 pl-4 text-muted-stone">90 days or ongoing</td>
+            </tr>
+            <tr>
+              <td class="py-4 pr-4 text-cream font-medium">AEO / GEO</td>
+              <td class="py-4 px-4 text-muted-stone">Getting cited by ChatGPT, Perplexity, AI Overviews</td>
+              <td class="py-4 px-4 text-gold font-mono">AI citation rate</td>
+              <td class="py-4 pl-4 text-muted-stone">90-day cycles</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- FAQ Section -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Frequently Asked Questions</h2>
+      <div class="space-y-8">
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What growth marketing services does My Site offer?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">We offer five integrated growth capabilities: Paid Media, AI Performance Creative, Conversion Optimization, Lifecycle & Retention, and Growth Strategy & Leadership. We also support AEO/GEO Optimization for companies that need stronger AI-search visibility.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">How does My Site's integrated approach work?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">Instead of selling isolated channels, we built a system where paid media, creative, conversion optimization, lifecycle, and strategy reinforce each other. Every dollar of ad spend generates data that improves creative, creative insights improve conversion rates, and conversion data informs strategy — creating a compounding growth engine.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What is the best way to get started?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">The most popular entry point is the 90-Day Jumpstart — a concentrated sprint to diagnose your growth landscape, run initial experiments, and deliver an actionable roadmap. Alternatively, you can <a href="/contact" class="text-gold hover:underline underline-offset-4">book a free 30-minute diagnostic call</a> to map your situation.</p>
+        </div>
+        <div class="border-l-2 border-dark-umber pl-6">
+          <h3 class="text-cream font-medium text-base mb-2">What industries does My Site specialize in?</h3>
+          <p class="text-muted-stone text-base leading-relaxed">We specialize in SaaS, PLG (product-led growth), and AI companies. Our clients include enterprise brands like Bloomberg, Samsung, and Intel, as well as growth-stage companies like TubeBuddy, Zencastr, and BENlabs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {collierTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{collierTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{collierTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{collierTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Ready to build your growth engine?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's start with a conversation about where you are and where you want to go.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call →</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  // IntersectionObserver for sticky nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.service-nav-link');
+
+  const sectionIds = Array.from(sections).map(s => s.id);
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach((link) => {
+            const href = link.getAttribute('href');
+            if (href === `#${id}`) {
+              link.classList.add('text-gold');
+              link.classList.remove('text-muted-stone');
+            } else {
+              link.classList.remove('text-gold');
+              link.classList.add('text-muted-stone');
+            }
+          });
+        }
+      });
+    },
+    {
+      rootMargin: '-50% 0px -50% 0px',
+    }
+  );
+
+  sections.forEach((section) => {
+    if (sectionIds.includes(section.id)) {
+      observer.observe(section);
+    }
+  });
+</script>

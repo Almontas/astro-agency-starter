@@ -1,0 +1,232 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+import { gitLastModified } from '../../lib/gitLastModified.js';
+
+const caseStudies = await getCollection('case-studies');
+const croStudies = caseStudies.filter(s => ['tubebuddy', 'zencastr'].includes(s.id));
+
+const testimonials = await getCollection('testimonials');
+const collierTestimonial = testimonials.find(t => t.id === 'collier-hamm');
+---
+
+<BaseLayout title="Conversion Optimization — My Site" description="Structured conversion experiments on every decision surface. 32% average conversion lift through rigorous A/B testing.">
+
+  <!-- Service JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Conversion Optimization",
+    "provider": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Structured conversion experiments on every decision surface — landing pages, signup flows, onboarding, pricing. 32% average conversion lift through rigorous A/B testing.",
+    "url": "https://example.com/services/conversion-optimization",
+    "dateModified": gitLastModified('src/pages/services/conversion-optimization.astro', "2026-03-18")
+  })} />
+
+  <!-- HowTo JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How My Site Approaches Conversion Optimization",
+    "description": "A three-phase CRO methodology that treats conversion optimization as part of the growth system, where small wins compound into significant revenue.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Diagnose",
+        "text": "Find what is holding growth back."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Spark",
+        "text": "Launch focused tests across the highest-impact growth levers."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Amplify",
+        "text": "Scale what works and turn it into a repeatable system."
+      }
+    ]
+  })} />
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is conversion optimization and why does it matter?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Conversion optimization (CRO) is the practice of running structured experiments on every surface where prospects make decisions — landing pages, signup flows, onboarding sequences, and pricing pages. It matters because traffic without conversion is expensive noise. Small conversion lifts compound dramatically, making every dollar of acquisition spend generate more revenue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What conversion lift can I expect from My Site's CRO services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site delivers a 32% average conversion lift across client portfolios through rigorous A/B testing. Individual results vary — for example, TubeBuddy achieved a 50%+ revenue lift through systematic conversion optimization."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is My Site's CRO approach different from other agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most CRO agencies run isolated tests. My Site treats conversion optimization as part of the growth system — insights from paid media inform what gets tested, creative learnings shape landing page design, and lifecycle data reveals where the real drop-offs happen. This integrated approach means each optimization compounds across the entire funnel."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does My Site test during conversion optimization?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site tests every decision surface in the customer journey: landing pages, signup flows, onboarding sequences, pricing pages, CTAs, and checkout processes. Tests are prioritized by potential revenue impact and structured to generate statistically significant results."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Back nav -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-8">
+    <a href="/services" class="inline-flex items-center text-sm text-muted-stone hover:text-gold transition-colors duration-150">
+      <span class="mr-1">←</span> All Services
+    </a>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-20 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Conversion Optimization</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        Small Wins Compound Into Significant Revenue.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        We deliver a 32% average conversion lift by running structured experiments on every surface where prospects make decisions: landing pages, signup flows, onboarding sequences, and pricing pages. Traffic without conversion is expensive noise. We turn it into revenue.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <div class="border-y border-dark-umber py-8">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 md:gap-4 text-center md:text-left">
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="32" data-suffix="%">32%</p>
+          <p class="metric-label mt-1">avg conversion lift</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="50" data-suffix="%+">50%+</p>
+          <p class="metric-label mt-1">revenue lift (TubeBuddy)</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl">Every</p>
+          <p class="metric-label mt-1">decision surface tested</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How We Approach -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">How We Approach CRO</h2>
+      <div class="mt-10 space-y-10">
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 1</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Diagnose</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Find what is holding growth back.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 2</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Spark</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Launch focused tests across the highest-impact growth levers.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 3</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Amplify</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Scale what works and turn it into a repeatable system.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- What Makes This Different -->
+  <section class="bg-warm-slate border-y border-dark-umber py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">What Makes This Different</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Most CRO agencies run isolated tests. We treat conversion optimization as part of the growth system — insights from paid media inform what we test, creative learnings shape landing page design, and lifecycle data reveals where the real drop-offs happen.</p>
+        <p class="text-muted-stone text-base leading-relaxed">Small improvements compound dramatically. A 15% lift in trial-to-paid conversion means every dollar of acquisition spend generates more revenue, which funds more testing, which generates more learning. That's the loop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {croStudies.map((study) => (
+          <CaseStudyCard
+            title={study.data.title}
+            client={study.data.client}
+            challenge={study.data.challenge}
+            heroMetric={study.data.heroMetric}
+            heroMetricLabel={study.data.heroMetricLabel}
+            service={study.data.service}
+            slug={study.id}
+            featuredImage={study.data.featuredImage}
+            secondaryMetric={study.data.secondaryMetric}
+            secondaryMetricLabel={study.data.secondaryMetricLabel}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {collierTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{collierTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{collierTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{collierTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Ready to turn traffic into revenue?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's find the conversion opportunities hiding in your funnel.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call →</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+  <!-- Last Updated -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pb-8 text-right">
+    <span class="font-mono text-xs text-muted-stone/60">Last updated: March 2026</span>
+  </div>
+
+</BaseLayout>

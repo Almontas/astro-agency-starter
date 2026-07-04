@@ -1,0 +1,77 @@
+---
+/**
+ * ScrollReveal — Wraps content in a fade-in-up animation triggered by IntersectionObserver.
+ * Only animates opacity and transform (no transition-all).
+ * Optional `stagger` prop applies incremental delay to each direct child.
+ */
+interface Props {
+  class?: string;
+  delay?: number;
+  stagger?: number;
+}
+
+const { class: className = '', delay = 0, stagger } = Astro.props;
+---
+
+<div
+  class:list={['scroll-reveal', className]}
+  style={delay ? `transition-delay: ${delay}ms` : undefined}
+  data-stagger={stagger ? String(stagger) : undefined}
+>
+  <slot />
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition-property: opacity, transform;
+      transition-duration: 600ms;
+      transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    .scroll-reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          const stagger = el.dataset.stagger;
+
+          if (stagger) {
+            const ms = parseInt(stagger, 10);
+            Array.from(el.children).forEach((child, i) => {
+              (child as HTMLElement).style.transitionDelay = `${i * ms}ms`;
+            });
+          }
+
+          el.classList.add('is-visible');
+          observer.unobserve(el);
+        }
+      });
+    },
+    {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px',
+    }
+  );
+
+  document.querySelectorAll('.scroll-reveal').forEach((el) => {
+    observer.observe(el);
+  });
+</script>

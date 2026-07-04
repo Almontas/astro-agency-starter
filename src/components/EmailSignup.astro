@@ -1,0 +1,180 @@
+---
+interface Props {
+  variant?: 'full' | 'compact';
+  heading?: string;
+  subhead?: string;
+  bookCallLink?: boolean;
+}
+
+const {
+  variant = 'full',
+  heading = variant === 'full' ? 'Get the next post in your inbox' : 'Like this? Get the next one.',
+  subhead = variant === 'full'
+    ? "I write about growth, AI performance creative, and what's actually working in 2026. New posts when I have something real to say."
+    : 'Short emails. New posts as they ship.',
+  bookCallLink = true,
+} = Astro.props;
+
+const formId = `email-signup-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+{variant === 'full' ? (
+  <section class="py-12 md:py-16 border-t border-dark-umber">
+    <div class="max-w-2xl mx-auto px-6 lg:px-8 text-center">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream" style="letter-spacing: -0.03em;">{heading}</h2>
+      <p class="font-body text-muted-stone mt-4 leading-relaxed">{subhead}</p>
+
+      <form id={formId} class="email-signup-form mt-8 mx-auto" data-variant="full" novalidate>
+        <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <label class="sr-only" for={`${formId}-email`}>Email</label>
+          <input
+            id={`${formId}-email`}
+            type="email"
+            name="email"
+            required
+            autocomplete="email"
+            placeholder="you@company.com"
+            class="email-signup-input flex-1"
+          />
+          <input type="text" name="website" tabindex="-1" autocomplete="off" class="email-signup-honeypot" aria-hidden="true" />
+          <button type="submit" class="btn-cta email-signup-submit">Subscribe</button>
+        </div>
+        <p class="email-signup-status font-mono text-xs tracking-wide mt-4" data-state="idle"></p>
+      </form>
+
+      {bookCallLink && (
+        <p class="text-cream/40 text-[13px] mt-6">
+          Or <a href="/contact" class="text-teal underline underline-offset-2 hover:opacity-80" style="transition-property: opacity; transition-duration: 150ms;">book a strategy call &rarr;</a>
+        </p>
+      )}
+    </div>
+  </section>
+) : (
+  <div class="bg-warm-slate rounded-brand-md p-6 md:p-8 my-10 border border-dark-umber">
+    <p class="font-headline text-lg text-cream text-center" style="letter-spacing: -0.02em;">{heading}</p>
+    <p class="font-body text-sm text-muted-stone mt-2 leading-relaxed text-center">{subhead}</p>
+
+    <form id={formId} class="email-signup-form mt-5 mx-auto" data-variant="compact" novalidate>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <label class="sr-only" for={`${formId}-email`}>Email</label>
+        <input
+          id={`${formId}-email`}
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder="you@company.com"
+          class="email-signup-input flex-1"
+        />
+        <input type="text" name="website" tabindex="-1" autocomplete="off" class="email-signup-honeypot" aria-hidden="true" />
+        <button type="submit" class="btn-cta email-signup-submit">Subscribe</button>
+      </div>
+      <p class="email-signup-status font-mono text-xs tracking-wide mt-3 text-center" data-state="idle"></p>
+    </form>
+  </div>
+)}
+
+<style>
+  .email-signup-input {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    outline: none;
+    transition-property: border-color, background-color;
+    transition-duration: 150ms;
+  }
+  .email-signup-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+  .email-signup-input:hover {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+  .email-signup-input:focus-visible {
+    border-color: var(--color-accent-gold);
+    background: rgba(255, 255, 255, 0.06);
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+  }
+  .email-signup-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .email-signup-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  .email-signup-status {
+    min-height: 1.2em;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .email-signup-status[data-state="error"] {
+    color: #f0a8a0;
+  }
+  .email-signup-status[data-state="success"] {
+    color: var(--color-accent-gold);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('.email-signup-form').forEach((form) => {
+    if ((form as any).__wired) return;
+    (form as any).__wired = true;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const status = form.querySelector<HTMLParagraphElement>('.email-signup-status');
+      const submit = form.querySelector<HTMLButtonElement>('.email-signup-submit');
+      const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]');
+      const honeypot = form.querySelector<HTMLInputElement>('input[name="website"]');
+
+      if (!status || !submit || !emailInput) return;
+
+      const email = emailInput.value.trim();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+        status.dataset.state = 'error';
+        status.textContent = 'Please enter a valid email.';
+        return;
+      }
+
+      submit.disabled = true;
+      const originalLabel = submit.textContent;
+      submit.textContent = 'Subscribing…';
+      status.dataset.state = 'idle';
+      status.textContent = '';
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, website: honeypot?.value ?? '' }),
+        });
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data?.ok) {
+          status.dataset.state = 'success';
+          status.textContent = "You're in. Check your inbox for the welcome email.";
+          emailInput.value = '';
+          submit.textContent = 'Subscribed';
+        } else {
+          status.dataset.state = 'error';
+          status.textContent = data?.error || 'Something went wrong. Try again in a moment.';
+          submit.disabled = false;
+          submit.textContent = originalLabel;
+        }
+      } catch {
+        status.dataset.state = 'error';
+        status.textContent = 'Network error. Try again.';
+        submit.disabled = false;
+        submit.textContent = originalLabel;
+      }
+    });
+  });
+</script>

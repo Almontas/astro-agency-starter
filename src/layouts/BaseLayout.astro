@@ -1,0 +1,267 @@
+---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = 'My Site — Growth Marketing Agency',
+  description = 'My Site is a growth marketing agency that combines paid media, AI-powered creative, conversion optimization, and lifecycle strategy to drive measurable growth.',
+  ogImage = 'https://example.com/images/open-graph-social-share-2026.png',
+} = Astro.props;
+
+// BreadcrumbList generation
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = pathname === '/';
+const breadcrumbLabels: Record<string, string> = {
+  'services': 'Services',
+  'case-studies': 'Case Studies',
+  'blog': 'Blog',
+  'contact': 'Contact',
+  'about': 'About',
+  '90-day-jumpstart': '90-Day Jumpstart',
+  'paid-media': 'Paid Media',
+  'ai-performance-creative': 'AI Performance Creative',
+  'conversion-optimization': 'Conversion Optimization',
+  'aeo-geo': 'AEO / GEO Optimization',
+  'audit': 'AI Discovery Audit',
+  'report': 'Report',
+  'diagnostic': 'Growth System Diagnostic',
+  'result': 'Result',
+};
+
+function buildBreadcrumbs() {
+  if (isHome) return [];
+  const segments = pathname.split('/').filter(Boolean);
+  const items = [
+    { "@type": "ListItem" as const, "position": 1, "name": "Home", "item": "https://example.com" }
+  ];
+  let path = '';
+  segments.forEach((seg, i) => {
+    path += '/' + seg;
+    items.push({
+      "@type": "ListItem" as const,
+      "position": i + 2,
+      "name": breadcrumbLabels[seg] || seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' '),
+      "item": `https://example.com${path}`
+    });
+  });
+  return items;
+}
+
+const breadcrumbItems = buildBreadcrumbs();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1E1B18" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, 'https://example.com').href} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- SEO / OG -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:site_name" content="My Site" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:site" content="@yourhandle" />
+    <meta property="og:image:alt" content="My Site — Growth Marketing Agency" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Google Analytics (GA4) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA4_ID"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'YOUR_GA4_ID');
+    </script>
+
+    <!-- LinkedIn Insight Tag -->
+    <script is:inline>
+      _linkedin_partner_id = "YOUR_LINKEDIN_PARTNER_ID";
+      window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+      window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+    </script>
+    <script is:inline>
+      (function(l) {
+        if (!l){window.lintrk = function(a,b){window.lintrk.q.push([a,b])};
+        window.lintrk.q=[]}
+        var s = document.getElementsByTagName("script")[0];
+        var b = document.createElement("script");
+        b.type = "text/javascript";b.async = true;
+        b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+        s.parentNode.insertBefore(b, s);
+      })(window.lintrk);
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=YOUR_LINKEDIN_PARTNER_ID&fmt=gif" />
+    </noscript>
+
+    <!-- RB2B -->
+    <script is:inline>
+      !function(key) {
+        if (window.reb2b) return;
+        window.reb2b = {loaded: true};
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://b2bjsstore.s3.us-west-2.amazonaws.com/b/" + key + "/" + key + ".js.gz";
+        document.getElementsByTagName("script")[0].parentNode.insertBefore(s, document.getElementsByTagName("script")[0]);
+      }("YOUR_RB2B_KEY");
+    </script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com",
+      "logo": "https://example.com/logos/logo-dark.svg",
+      "description": "Growth marketing agency for SaaS, PLG, and AI companies.",
+      "founder": {
+        "@type": "Person",
+        "name": "Your Name",
+        "url": "https://www.linkedin.com/in/yourprofile/"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/yourcompany",
+        "https://www.linkedin.com/in/yourprofile/",
+        "https://x.com/yourhandle"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@example.com",
+        "contactType": "sales"
+      }
+    })} />
+
+    <!-- WebSite schema (homepage only) -->
+    {isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "My Site",
+        "url": "https://example.com",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://example.com/?s={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      })} />
+    )}
+
+    <!-- Person schema (founder) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Your Name",
+      "url": "https://www.linkedin.com/in/yourprofile/",
+      "jobTitle": "Founder & CEO",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "My Site",
+        "url": "https://example.com"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/yourprofile/",
+        "https://x.com/yourhandle"
+      ]
+    })} />
+
+    <!-- BreadcrumbList -->
+    {!isHome && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbItems
+      })} />
+    )}
+    <slot name="head" />
+  </head>
+
+  <body class="bg-espresso text-cream font-body antialiased">
+    <!-- Ambient background glow -->
+    <div class="ambient-glow" aria-hidden="true">
+      <div class="ambient-glow-orb ambient-glow-orb-1"></div>
+      <div class="ambient-glow-orb ambient-glow-orb-2"></div>
+    </div>
+
+    <!-- Skip to content -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-amber focus:text-espresso focus:rounded-brand-sm focus:font-semibold focus:text-sm focus:outline-none"
+    >
+      Skip to content
+    </a>
+
+    <Nav />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script>
+      // Counter animation utility — runs on all pages
+      function animateCounters() {
+        const els = document.querySelectorAll('[data-count-to]');
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target as HTMLElement;
+            if (el.dataset.counted) return;
+            el.dataset.counted = 'true';
+            const target = parseInt(el.dataset.countTo!, 10);
+            const prefix = el.dataset.prefix || '';
+            const suffix = el.dataset.suffix || '';
+            const duration = 1500;
+            const startTime = performance.now();
+            function update(now: number) {
+              const t = Math.min((now - startTime) / duration, 1);
+              const eased = 1 - Math.pow(1 - t, 3);
+              const val = Math.round(eased * target);
+              el.textContent = prefix + val + suffix;
+              if (t < 1) requestAnimationFrame(update);
+            }
+            requestAnimationFrame(update);
+          });
+        }, { threshold: 0.3 });
+        els.forEach(el => observer.observe(el));
+      }
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        animateCounters();
+      }
+    </script>
+    <Analytics />
+  </body>
+</html>

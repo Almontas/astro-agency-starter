@@ -1,0 +1,77 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  theme: {
+    extend: {
+      colors: {
+        espresso:       '#1E1B18',
+        'warm-slate':   '#2A2725',
+        'dark-umber':   '#353230',
+        cream:          '#F2E8DC',
+        'muted-stone':  '#9B918A',
+        gold:           '#C9A96E',
+        amber:          '#D4A44A',
+        teal:           '#5B9E8F',
+        'kiln-red':     '#B86B4A',
+        sage:           '#7A8264',
+        wheat:          '#C4A96E',
+        parchment:      '#F5F0E8',
+        'deep-gold':    '#A8884E',
+        'deep-teal':    '#4A8577',
+        'warm-gray':    '#7A7570',
+        'warm-border':  '#DDD6CC',
+      },
+      fontFamily: {
+        headline: ["'Instrument Serif'", 'Georgia', "'Times New Roman'", 'serif'],
+        body:     ["'Inter'", 'Calibri', '-apple-system', 'sans-serif'],
+        mono:     ["'JetBrains Mono'", 'Consolas', "'Courier New'", 'monospace'],
+      },
+      fontSize: {
+        'xs':   ['0.75rem',  { lineHeight: '1.5' }],
+        'sm':   ['0.875rem', { lineHeight: '1.5' }],
+        'base': ['1rem',     { lineHeight: '1.7' }],
+        'md':   ['1.125rem', { lineHeight: '1.7' }],
+        'lg':   ['1.25rem',  { lineHeight: '1.5' }],
+        'xl':   ['1.5rem',   { lineHeight: '1.35' }],
+        '2xl':  ['2rem',     { lineHeight: '1.15' }],
+        '3xl':  ['2.5rem',   { lineHeight: '1.15' }],
+        '4xl':  ['3.25rem',  { lineHeight: '1.1' }],
+        '5xl':  ['4rem',     { lineHeight: '1.05' }],
+      },
+      letterSpacing: {
+        'tightest': '-0.03em',
+        'tight':    '-0.02em',
+        'normal':   '0',
+        'wide':     '0.05em',
+        'wider':    '0.1em',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '30': '7.5rem',
+        '36': '9rem',
+      },
+      boxShadow: {
+        'brand-sm':  '0 1px 2px rgba(30,27,24,0.3), 0 1px 3px rgba(30,27,24,0.15)',
+        'brand-md':  '0 4px 6px rgba(30,27,24,0.25), 0 2px 4px rgba(30,27,24,0.1)',
+        'brand-lg':  '0 10px 25px rgba(30,27,24,0.35), 0 4px 10px rgba(30,27,24,0.15)',
+        'brand-gold':'0 4px 15px rgba(201,169,110,0.15), 0 1px 3px rgba(201,169,110,0.1)',
+        'card-rest': '0 1px 2px rgba(30,27,24,0.4), 0 4px 8px rgba(30,27,24,0.2)',
+        'card-hover':'0 4px 8px rgba(30,27,24,0.3), 0 16px 32px rgba(30,27,24,0.25), 0 0 24px rgba(201,169,110,0.07)',
+      },
+      borderRadius: {
+        'brand-sm': '4px',
+        'brand-md': '8px',
+        'brand-lg': '12px',
+      },
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+        'spring':   'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      },
+      backgroundImage: {
+        'warm-glow': 'radial-gradient(ellipse 60% 50% at 85% 10%, rgba(201,169,110,0.08) 0%, rgba(201,169,110,0.03) 40%, transparent 70%)',
+      },
+    },
+  },
+  plugins: [],
+};

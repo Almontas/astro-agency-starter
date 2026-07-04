@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+import { gitLastModified } from '../../lib/gitLastModified.js';
+
+const caseStudies = await getCollection('case-studies');
+const paidMediaStudies = caseStudies.filter(s =>
+  ['bloomberg', 'elitetradeclub', 'benlabs', 'option-trade-king', 'virtual-santa', 'zencastr'].includes(s.id)
+);
+
+const testimonials = await getCollection('testimonials');
+const mikeTestimonial = testimonials.find(t => t.id === 'mike-fard');
+---
+
+<BaseLayout title="Paid Media — My Site" description="Paid media management across Google, Meta, LinkedIn, and TikTok. $50M+ in managed ad spend with a compounding learning system.">
+
+  <!-- Service JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Paid Media",
+    "provider": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Paid media management across Google, Meta, LinkedIn, and TikTok with a compounding learning system. $50M+ in managed ad spend.",
+    "url": "https://example.com/services/paid-media",
+    "dateModified": gitLastModified('src/pages/services/paid-media.astro', "2026-03-18")
+  })} />
+
+  <!-- HowTo JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How My Site Approaches Paid Media Management",
+    "description": "A three-phase methodology for paid media that builds a compounding learning system where each month of spend makes the next month more efficient.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Diagnose",
+        "text": "Find what is holding growth back."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Spark",
+        "text": "Launch focused tests across the highest-impact growth levers."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Amplify",
+        "text": "Scale what works and turn it into a repeatable system."
+      }
+    ]
+  })} />
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What paid media channels does My Site manage?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site manages paid acquisition across Google, Meta, LinkedIn, and TikTok. Channel management is the table stakes — the real value is building a compounding learning system where each month of spend makes the next month more efficient."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much ad spend has My Site managed?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "My Site has managed over $50M in ad spend across client portfolios, with an average 75% CPA reduction through systematic testing and optimization."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is My Site's paid media approach different from other agencies?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most agencies optimize toward a target CPA and call it a day. My Site builds a system where each dollar generates data, each data point informs the next experiment, and each experiment compounds into growing conviction about what actually drives your business. After 6 months, you know more about your market than competitors who've been spending for years."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What results can I expect from My Site's paid media management?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Results vary by client, but My Site's systematic approach has delivered a 75% average CPA reduction across client portfolios. The compounding learning system means performance typically improves each month as more data informs strategy."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Back nav -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-8">
+    <a href="/services" class="inline-flex items-center text-sm text-muted-stone hover:text-gold transition-colors duration-150">
+      <span class="mr-1">←</span> All Services
+    </a>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-20 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Paid Media</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        Every Dollar Generates Data. Every Insight Compounds.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        We've managed over $50M in paid media across Google, Meta, LinkedIn, and TikTok, reducing CPA by 75% on average. The difference is how: we build a compounding learning system where each month of spend makes the next month more efficient. Channel management is the table stakes, not the value.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <div class="border-y border-dark-umber py-8">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 md:gap-4 text-center md:text-left">
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="50" data-prefix="$" data-suffix="M+">$50M+</p>
+          <p class="metric-label mt-1">managed ad spend</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="75" data-suffix="%">75%</p>
+          <p class="metric-label mt-1">avg CPA reduction</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="4">4</p>
+          <p class="metric-label mt-1">channels managed</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How We Approach -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">How We Approach Paid Media</h2>
+      <div class="mt-10 space-y-10">
+        <!-- Phase 1 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 1</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Diagnose</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Find what is holding growth back.</p>
+        </div>
+        <!-- Phase 2 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 2</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Spark</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Launch focused tests across the highest-impact growth levers.</p>
+        </div>
+        <!-- Phase 3 -->
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 3</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Amplify</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Winners get scaled. Losers get killed. The system compounds — each month's data informs next month's strategy, driving CPA down while growing conviction about what actually drives your business.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- What Makes This Different -->
+  <section class="bg-warm-slate border-y border-dark-umber py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">What Makes This Different</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Most agencies optimize toward a target CPA and call it a day. We build a system where each dollar generates data, each data point informs the next experiment, and each experiment compounds into growing conviction about what actually drives your business.</p>
+        <p class="text-muted-stone text-base leading-relaxed">The result isn't just better performance metrics — it's a strategic asset. After 6 months of working together, you'll know more about your market than competitors who've been spending for years, because our testing framework extracts maximum learning from every dollar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Read the Playbook -->
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <div class="rounded-brand-md border border-dark-umber bg-warm-slate/40 p-8 md:p-10">
+        <span class="font-mono text-xs text-gold tracking-wider uppercase">The Playbook</span>
+        <h2 class="font-headline text-2xl md:text-3xl text-cream mt-4">How we run paid media in 2026</h2>
+        <p class="text-muted-stone text-base leading-relaxed mt-4">
+          We wrote the full strategic framework: what AI changes about paid media, where the leverage actually lives in 2026, the channel playbooks for Meta, TikTok, and Google, and how to measure what is working when platform attribution alone is not enough.
+        </p>
+        <a href="/blog/paid-media-with-ai-framework" class="inline-flex items-center gap-2 mt-6 text-gold hover:text-amber transition-colors duration-150">
+          <span class="font-body text-base">Read the Paid Media with AI framework</span>
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {paidMediaStudies.map((study) => (
+          <CaseStudyCard
+            title={study.data.title}
+            client={study.data.client}
+            challenge={study.data.challenge}
+            heroMetric={study.data.heroMetric}
+            heroMetricLabel={study.data.heroMetricLabel}
+            service={study.data.service}
+            slug={study.id}
+            featuredImage={study.data.featuredImage}
+            secondaryMetric={study.data.secondaryMetric}
+            secondaryMetricLabel={study.data.secondaryMetricLabel}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {mikeTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{mikeTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{mikeTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{mikeTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Ready to make every dollar compound?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's audit your current paid media and find the opportunities.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call →</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+  <!-- Last Updated -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pb-8 text-right">
+    <span class="font-mono text-xs text-muted-stone/60">Last updated: March 2026</span>
+  </div>
+
+</BaseLayout>

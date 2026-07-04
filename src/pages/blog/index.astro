@@ -1,0 +1,226 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../components/BlogPostCard.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import { getCollection } from 'astro:content';
+
+const now = Date.now();
+const calcReadTime = (body: string | undefined): number => {
+  if (!body) return 1;
+  const words = body.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 220));
+};
+
+const posts = (await getCollection('blog'))
+  .filter(p => !p.data.draft && p.data.publishDate.getTime() <= now)
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const pillarPosts = posts.filter(p => p.data.postType === 'Playbook');
+const articlePosts = posts.filter(p => p.data.postType !== 'Playbook');
+
+const categoryCounts = articlePosts.reduce<Record<string, number>>((acc, p) => {
+  for (const cat of p.data.categories) {
+    acc[cat] = (acc[cat] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+const filterTabs = [
+  { label: 'All', value: 'all' },
+  ...Object.keys(categoryCounts)
+    .sort((a, b) => a.localeCompare(b))
+    .map(cat => ({ label: cat, value: cat })),
+];
+
+const authorSchemaMap: Record<string, { url: string; jobTitle: string; sameAs: string[] }> = {
+  'Your Name Hernandez': {
+    url: 'https://www.linkedin.com/in/yourprofile/',
+    jobTitle: 'Founder & CEO',
+    sameAs: ['https://www.linkedin.com/in/yourprofile/', 'https://x.com/yourhandle'],
+  },
+  'Belen Crespo': {
+    url: 'https://www.linkedin.com/in/belen-crespo/',
+    jobTitle: 'Growth Strategist',
+    sameAs: ['https://www.linkedin.com/in/belen-crespo/'],
+  },
+};
+---
+
+<BaseLayout title="My Site Blog — Paid Media, AI Creative & SEO" description="Insights on paid media, AI creative, conversion optimization, and lifecycle strategy from My Site's growth marketing team.">
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Blog — My Site",
+      "description": "Insights on paid media, AI creative, conversion optimization, and lifecycle strategy from My Site's growth marketing team.",
+      "url": "https://example.com/blog",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": posts.map((post, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "url": `https://example.com/blog/${post.id}`,
+          "name": post.data.title,
+          "item": {
+            "@type": "BlogPosting",
+            "headline": post.data.title,
+            "datePublished": post.data.publishDate.toISOString(),
+            "author": {
+              "@type": "Person",
+              "name": post.data.author,
+              ...(authorSchemaMap[post.data.author] ? {
+                "url": authorSchemaMap[post.data.author].url,
+                "jobTitle": authorSchemaMap[post.data.author].jobTitle,
+                "sameAs": authorSchemaMap[post.data.author].sameAs
+              } : {})
+            }
+          }
+        }))
+      }
+    })} />
+  </Fragment>
+  <section class="py-16 md:py-20 px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header -->
+      <div class="mb-10 md:mb-12">
+        <span class="section-number font-mono text-xs text-gold tracking-wider uppercase">Blog</span>
+        <h1 class="font-headline text-3xl md:text-4xl text-cream mt-4">Field Notes on Growth</h1>
+        <p class="font-body text-muted-stone mt-4 max-w-2xl leading-relaxed">
+          Notes on paid media, AI creative, CRO, and lifecycle. Mostly things we've figured out running growth at agencies and SaaS companies. Not recycled best practices.
+        </p>
+      </div>
+
+      {pillarPosts.length > 0 && (
+        <section class="mb-14 md:mb-16" id="featured-guides">
+          <div class="flex items-baseline justify-between mb-6">
+            <h2 class="font-mono text-xs text-gold tracking-wider uppercase">Start here · The Playbooks</h2>
+            <span class="font-mono text-xs text-muted-stone tracking-wide hidden md:inline">{pillarPosts.length} guide{pillarPosts.length === 1 ? '' : 's'}</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {pillarPosts.map((post) => (
+              <BlogPostCard
+                title={post.data.title}
+                categories={post.data.categories}
+                excerpt={post.data.excerpt}
+                cardHook={post.data.cardHook}
+                postType={post.data.postType}
+                publishDate={post.data.publishDate}
+                slug={post.id}
+                featuredImage={post.data.featuredImage}
+                readTime={calcReadTime(post.body)}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap gap-2 mb-10">
+        {filterTabs.map((tab, i) => (
+          <button
+            class={`filter-tab ${i === 0 ? 'active' : ''}`}
+            data-filter={tab.value}
+            type="button"
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Posts Grid -->
+      <ScrollReveal stagger={150}>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {articlePosts.map((post) => (
+            <div class="blog-filter-card" data-categories={post.data.categories.join(',')}>
+              <BlogPostCard
+                title={post.data.title}
+                categories={post.data.categories}
+                excerpt={post.data.excerpt}
+                cardHook={post.data.cardHook}
+                postType={post.data.postType}
+                publishDate={post.data.publishDate}
+                slug={post.id}
+                featuredImage={post.data.featuredImage}
+                readTime={calcReadTime(post.body)}
+              />
+            </div>
+          ))}
+        </div>
+      </ScrollReveal>
+
+      <!-- CTA -->
+      <section class="py-16 md:py-20 text-center border-t border-dark-umber mt-16">
+        <div class="max-w-2xl mx-auto px-6 lg:px-8">
+          <h2 class="font-headline text-2xl md:text-3xl text-cream" style="letter-spacing: -0.03em;">Want Help Applying This to Your Growth System?</h2>
+          <p class="font-body text-muted-stone mt-4 leading-relaxed">If your team is trying to figure out what is holding growth back, we can help.</p>
+          <p class="font-body text-muted-stone mt-4 leading-relaxed">Book a free strategy call and we'll take a practical look at your acquisition, conversion, and growth opportunities.</p>
+          <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call</a>
+          <p class="text-cream/30 text-[13px] mt-4 text-center">Typically responds within 24 hours</p>
+        </div>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-tab {
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    color: var(--color-text-secondary);
+    background: transparent;
+    border: 1px solid var(--color-border-subtle);
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition-property: transform, border-color, color;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .filter-tab:hover {
+    border-color: rgba(201, 169, 110, 0.4);
+    color: var(--color-text-primary);
+  }
+
+  .filter-tab:focus-visible {
+    outline: 2px solid var(--color-accent-gold);
+    outline-offset: 2px;
+  }
+
+  .filter-tab:active {
+    transform: scale(0.97);
+  }
+
+  .filter-tab.active {
+    border-color: var(--color-accent-gold);
+    color: var(--color-accent-gold);
+    background: rgba(201, 169, 110, 0.08);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll<HTMLButtonElement>('.filter-tab');
+    const cards = document.querySelectorAll<HTMLElement>('.blog-filter-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+
+        cards.forEach(card => {
+          const cats = (card.dataset.categories || '').split(',');
+          if (filter === 'all' || cats.includes(filter as string)) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>

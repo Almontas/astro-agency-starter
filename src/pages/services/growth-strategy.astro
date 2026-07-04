@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ScrollReveal from '../../components/ScrollReveal.astro';
+import CaseStudyCard from '../../components/CaseStudyCard.astro';
+import { getCollection } from 'astro:content';
+import { gitLastModified } from '../../lib/gitLastModified.js';
+
+const caseStudies = await getCollection('case-studies');
+const growthStudies = caseStudies.filter(s => ['hedgefundalpha'].includes(s.id));
+
+const testimonials = await getCollection('testimonials');
+const mattTestimonial = testimonials.find(t => t.id === 'matt-plotnik');
+---
+
+<BaseLayout title="Growth Strategy & Leadership | My Site" description="Not every company is ready for full execution on day one. We diagnose the growth situation, build the roadmap, and set the direction. 90-Day Jumpstart available.">
+
+  <!-- Service JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Growth Strategy & Leadership",
+    "provider": {
+      "@type": "Organization",
+      "name": "My Site",
+      "url": "https://example.com"
+    },
+    "description": "Not every company is ready for full execution on day one. We diagnose the growth situation, build the roadmap, and set the direction. 90-Day Jumpstart available.",
+    "url": "https://example.com/services/growth-strategy",
+    "dateModified": gitLastModified('src/pages/services/growth-strategy.astro', "2026-04-12")
+  })} />
+
+  <!-- HowTo JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "How My Site Approaches Growth Strategy & Leadership",
+    "description": "A three-phase growth strategy methodology that diagnoses the situation, builds a focused roadmap, and executes with clarity and momentum.",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Diagnose",
+        "text": "Find what is holding growth back."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Spark",
+        "text": "Launch focused tests across the highest-impact growth levers."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Amplify",
+        "text": "Scale what works and turn it into a repeatable system."
+      }
+    ]
+  })} />
+
+  <!-- FAQPage JSON-LD -->
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a growth strategy engagement?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A growth strategy engagement is a focused diagnostic and planning process where a senior growth leader audits your current state, identifies the highest-value opportunities, and builds an actionable roadmap. It's designed for companies that need strategic clarity before committing to full execution."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the 90-Day Jumpstart?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The 90-Day Jumpstart is My Site's most popular entry point. It's a concentrated sprint to map your growth landscape, identify your biggest opportunities, and build a sequenced action plan. You get a clear roadmap with specific priorities, owners, and timelines."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need ongoing execution or just strategy?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Both are valid outcomes. Some clients use the strategy engagement to get clarity and then execute with their own team. Others want My Site to lead execution after the roadmap is built. We support both paths and there's no pressure either way."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What kind of results can I expect from a growth strategy engagement?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Results vary by company, but clients typically gain clear visibility into what's working and what's not, a prioritized roadmap they can act on immediately, and alignment across their team on growth priorities. For Hedge Fund Alpha, strategic work led to a 40% reduction in acquisition costs."
+        }
+      }
+    ]
+  })} />
+
+  <!-- Back nav -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pt-8">
+    <a href="/services" class="inline-flex items-center text-sm text-muted-stone hover:text-gold transition-colors duration-150">
+      <span class="mr-1">←</span> All Services
+    </a>
+  </div>
+
+  <!-- Hero -->
+  <section class="py-12 md:py-20 warm-glow-strong">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <span class="section-number mb-4 block">Growth Strategy & Leadership</span>
+      <h1 class="font-headline text-3xl md:text-5xl tracking-tightest text-cream headline-glow">
+        The Plan Before the Engine.
+      </h1>
+      <p class="text-muted-stone mt-6 text-lg leading-relaxed max-w-3xl">
+        Not every company is ready for full execution on day one. Growth Strategy & Leadership is a standalone engagement for companies that need someone senior to diagnose the situation, build the roadmap, and set the direction. Sometimes it leads to a full engagement. Sometimes it doesn't. Both are fine.
+      </p>
+    </div>
+  </section>
+
+  <!-- Stat Bar -->
+  <div class="border-y border-dark-umber py-8">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row justify-between gap-8 md:gap-4 text-center md:text-left">
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="90" data-suffix="-day">90-day</p>
+          <p class="metric-label mt-1">clarity</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-count-to="40" data-suffix="%">40%</p>
+          <p class="metric-label mt-1">cost reduction (Hedge Fund Alpha)</p>
+        </div>
+        <div>
+          <p class="metric-value text-3xl md:text-4xl" data-prefix="$">$200M+</p>
+          <p class="metric-label mt-1">revenue influenced</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How We Approach -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">How We Approach Growth Strategy</h2>
+      <div class="mt-10 space-y-10">
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 1</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Diagnose</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Find what is holding growth back.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 2</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Spark</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Launch focused tests across the highest-impact growth levers.</p>
+        </div>
+        <div class="border-l-2 border-gold/30 pl-6">
+          <span class="font-mono text-sm text-gold tracking-wider">Phase 3</span>
+          <h3 class="font-headline text-xl text-cream mt-1">Amplify</h3>
+          <p class="text-muted-stone text-base leading-relaxed mt-3">Scale what works and turn it into a repeatable system.</p>
+        </div>
+      </div>
+
+      <!-- 90-Day Jumpstart Callout -->
+      <div class="bg-warm-slate border border-dark-umber border-l-4 border-l-gold/40 rounded-brand-md p-6 mt-8">
+        <h3 class="font-headline text-lg text-cream">90-Day Jumpstart</h3>
+        <p class="text-muted-stone text-sm leading-relaxed mt-2">Our most popular entry point. A concentrated sprint to map your growth landscape, identify the highest-value opportunities, and build an actionable roadmap with sequenced priorities.</p>
+        <a href="/contact" class="inline-flex items-center text-sm text-gold tracking-wide mt-4 hover:underline underline-offset-4">Ask about the Jumpstart <span class="ml-1">&rarr;</span></a>
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- What Makes This Different -->
+  <section class="bg-warm-slate border-y border-dark-umber py-12 md:py-16">
+    <div class="max-w-4xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream">What Makes This Different</h2>
+      <div class="mt-6 space-y-4">
+        <p class="text-muted-stone text-base leading-relaxed">Most strategy engagements end with a deck. Ours end with a plan you can actually execute. We've built growth systems for companies from early-stage startups to Bloomberg. That pattern recognition is what makes the 90-day window work.</p>
+        <p class="text-muted-stone text-base leading-relaxed">We're not trying to lock you into a long-term contract. If strategy is all you need, that's a good outcome. If you want help executing, we're built for that too. The value is in the clarity, not the commitment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <ScrollReveal>
+  <section class="py-12 md:py-16">
+    <div class="max-w-6xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-2xl md:text-3xl text-cream mb-8">Results</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {growthStudies.map((study) => (
+          <CaseStudyCard
+            title={study.data.title}
+            client={study.data.client}
+            challenge={study.data.challenge}
+            heroMetric={study.data.heroMetric}
+            heroMetricLabel={study.data.heroMetricLabel}
+            service={study.data.service}
+            slug={study.id}
+            featuredImage={study.data.featuredImage}
+            secondaryMetric={study.data.secondaryMetric}
+            secondaryMetricLabel={study.data.secondaryMetricLabel}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+  </ScrollReveal>
+
+  <!-- Testimonial -->
+  {mattTestimonial && (
+    <section class="py-12 md:py-16 border-t border-dark-umber">
+      <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center">
+        <blockquote class="font-headline text-xl md:text-2xl text-cream/90 leading-relaxed italic">
+          "{mattTestimonial.data.quote}"
+        </blockquote>
+        <div class="mt-6">
+          <p class="text-cream font-body text-sm font-semibold">{mattTestimonial.data.name}</p>
+          <p class="text-muted-stone text-sm">{mattTestimonial.data.title}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Bottom CTA -->
+  <section class="py-16 md:py-24 text-center warm-glow-strong">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <h2 class="font-headline text-3xl md:text-4xl text-cream headline-glow">Need clarity before you commit to execution?</h2>
+      <p class="text-muted-stone mt-4 text-lg">Let's figure out where the real growth opportunities are.</p>
+      <a href="/contact" class="btn-cta mt-8 inline-block">Book a Free Strategy Call &rarr;</a>
+      <p class="text-muted-stone/60 text-sm mt-4">Typically responds within 24 hours</p>
+    </div>
+  </section>
+
+  <!-- Last Updated -->
+  <div class="max-w-5xl mx-auto px-6 lg:px-8 pb-8 text-right">
+    <span class="font-mono text-xs text-muted-stone/60">Last updated: April 2026</span>
+  </div>
+
+</BaseLayout>

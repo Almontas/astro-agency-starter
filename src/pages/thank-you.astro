@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Thank You — My Site" description="Thanks for reaching out to My Site. We've received your request and will be in touch within one business day to schedule your growth diagnostic.">
+  <section class="min-h-[70vh] flex items-center justify-center py-20 md:py-30 px-6 lg:px-8">
+    <div class="max-w-2xl mx-auto text-center">
+      <span class="section-number block mb-4">Received</span>
+      <h1 class="font-headline text-3xl md:text-4xl tracking-tightest text-cream mb-6">
+        Thanks for Reaching Out
+      </h1>
+      <p class="text-muted-stone text-base md:text-md leading-relaxed mb-4">
+        We've received your message and will respond within 24 hours. In the meantime, here's something worth reading.
+      </p>
+      <p class="text-muted-stone text-base leading-relaxed mb-10">
+        If your inquiry is time-sensitive, reach us at
+        <a
+          href="mailto:hello@example.com"
+          class="text-teal transition-opacity duration-150 ease-out-expo hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal active:opacity-60"
+        >hello@example.com</a>.
+      </p>
+
+      <div class="relative rounded-brand-md overflow-hidden mb-10">
+        <img src="/images/page-thank-you.png" alt="Thank you" class="w-full h-auto object-cover" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-espresso/60 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-amber/10 mix-blend-multiply"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+        <a
+          href="/case-studies/bloomberg"
+          class="block bg-warm-slate border border-dark-umber rounded-brand-md p-6 transition-transform transition-opacity duration-150 ease-out-expo hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:translate-y-0"
+        >
+          <span class="font-mono text-xs text-gold tracking-wider uppercase">Case Study</span>
+          <p class="font-headline text-lg text-cream mt-2">Bloomberg's First DTC Launch</p>
+          <p class="text-muted-stone text-sm mt-1">$1M → $100M revenue growth</p>
+        </a>
+        <a
+          href="/blog/growth-ceiling-diagnosis"
+          class="block bg-warm-slate border border-dark-umber rounded-brand-md p-6 transition-transform transition-opacity duration-150 ease-out-expo hover:-translate-y-0.5 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold active:translate-y-0"
+        >
+          <span class="font-mono text-xs text-gold tracking-wider uppercase">Blog</span>
+          <p class="font-headline text-lg text-cream mt-2">How to Diagnose a Growth Ceiling</p>
+          <p class="text-muted-stone text-sm mt-1">When growth plateaus, the instinct is to spend more...</p>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
